@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'">
+    <title>Accueil</title>
+  </head>
+  <body>
+    <h1>S'inscrire :</h1>
+    <div>
+      <input name="firstName" type="text" placeholder="FirstName"></input>
+      <input name="lastName" type="text" placeholder="LastName"></input>
+      <input name="email" type="text" placeholder=Email"></input>
+
+      <input type="password" placeholder="Password"></input>
+      <input type="confirmPassword" placeholder="Confirm your password"
+    </div>
+    
+
+    <button type="submit">Se connecter</button>
+
+    <!-- You can also require other files to run in this process -->
+    <script src="./renderer.js"></script>
+  </body>
+</html>
