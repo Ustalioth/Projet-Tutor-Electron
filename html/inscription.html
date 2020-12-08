@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>S'inscrire :</h1>
-    <div>
-      <input id="firstName" type="text" placeholder="FirstName">
-      <input id="lastName" type="text" placeholder="LastName">
-      <input id="email" type="text" placeholder="Email">
+    <form id="inscriptionForm">
+      <input id="firstName" type="text" placeholder="FirstName" />
+      <input id="lastName" type="text" placeholder="LastName" />
+      <input id="email" type="text" placeholder="Email" />
+      <input id="password" type="password" placeholder="Password" />
+      <input
+        id="confirmPassword"
+        type="password"
+        placeholder="Confirm your password"
+      />
 
-      <input id="password" type="password" placeholder="Password">
-      <input id="confirmPassword" type="password" placeholder="Confirm your password">
-    </div>
-
-    <button id="submitButton" type="submit">Valider</button>
-
-</body>
+      <button id="submitButton" type="submit">S'inscrire</button>
+    </form>
+    <script type="module" src="../tools.js"></script>
+    <script type="module" src="../js/inscription.js"></script>
+  </body>
 </html>
