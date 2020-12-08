@@ -5,6 +5,13 @@
       "email": "r",
       "password": "r",
       "id": 3
+    },
+    {
+      "name": "Michel Thiery",
+      "email": "m@t.fr",
+      "password": "z",
+      "points": 0,
+      "id": 4
     }
   ]
 }
