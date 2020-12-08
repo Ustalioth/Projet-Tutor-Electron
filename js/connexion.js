@@ -5,10 +5,11 @@ let form = document.getElementById("connectForm");
 function checkConnectionData(data, connectionData) {
   let index = 1;
 
-  data = sortByScore(data);
-  data.forEach((element) => {
+  let sortedData = sortByScore(data);
+  sortedData.forEach((element) => {
     if (element.email === connectionData.email) {
       if (element.password === connectionData.password) {
+        localStorage.setItem("playerCount", Object.keys(sortedData).length);
         localStorage.setItem("position", index);
         localStorage.setItem("user", JSON.stringify(element));
         window.location.href = "../html/accueil.html";
