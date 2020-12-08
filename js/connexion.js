@@ -7,7 +7,7 @@ function checkConnectionData(data, connectionData) {
     if (element.email === connectionData.email) {
       if (element.password === connectionData.password) {
         console.log(element);
-        localStorage.setItem("user", element);
+        localStorage.setItem("user", JSON.stringify(element));
         window.location.href = "../html/accueil.html";
       }
     }

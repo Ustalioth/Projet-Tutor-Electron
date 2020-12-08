@@ -1,8 +1,8 @@
 let points = document.getElementById("points");
 let place = document.getElementById("place");
 
-let user = localStorage.getItem("user");
+let user = JSON.parse(localStorage.getItem("user"));
 
-console.log(JSON.parse(user));
+console.log(user.points);
 
 points.value = user.points;
