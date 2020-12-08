@@ -5,7 +5,7 @@ let form = document.getElementById("connectForm");
 function checkConnectionData(data, connectionData) {
   data.forEach((element) => {
     if (element.email === connectionData.email) {
-      if (element.address.city === connectionData.password) {
+      if (element.password === connectionData.password) {
         console.log("vous êtes connecté");
       }
     }
@@ -19,7 +19,7 @@ form.addEventListener("submit", function (e) {
   let password = document.getElementById("password").value;
 
   http(
-    "https://jsonplaceholder.typicode.com/users",
+    "http://localhost:3000/users",
     "GET",
     { email: email, password: password },
     checkConnectionData
