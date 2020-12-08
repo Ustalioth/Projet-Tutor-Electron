@@ -12,20 +12,17 @@
       http-equiv="X-Content-Security-Policy"
       content="default-src 'self'; script-src 'self'"
     />
-    <title>Connexion</title>
+    <title>Accueil</title>
   </head>
   <body>
-    <h1>Se connecter</h1>
-    <form id="connectForm">
-      <input required id="email" type="text" placeholder="Email" />
-      <input required id="password" type="password" placeholder="Password" />
-      <button id="submitButton" type="submit">Valider</button>
-    </form>
-
-    Pas de compte ?<a href="./inscription.html">S'inscrire</a>
+    <h1>Accueil</h1>
+    <ul>
+      <li>Points : <span id="points"></span></li>
+      <li>Place dans le classement : <span id="place"></span></li>
+    </ul>
 
     <!-- You can also require other files to run in this process -->
     <script type="module" src="../tools.js"></script>
-    <script type="module" src="../js/connexion.js"></script>
+    <script type="module" src="../js/accueil.js"></script>
   </body>
 </html>

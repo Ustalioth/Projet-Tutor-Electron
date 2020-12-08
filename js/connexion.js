@@ -6,7 +6,9 @@ function checkConnectionData(data, connectionData) {
   data.forEach((element) => {
     if (element.email === connectionData.email) {
       if (element.password === connectionData.password) {
-        console.log("vous êtes connecté");
+        console.log(element);
+        localStorage.setItem("user", element);
+        window.location.href = "../html/accueil.html";
       }
     }
   });
