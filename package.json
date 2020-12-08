@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A minimal Electron application",
   "main": "main.js",
+  "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'",
   "scripts": {
     "start": "electron ."
   },
@@ -18,5 +19,8 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^11.0.3"
+  },
+  "dependencies": {
+    "jquery": "^3.5.1"
   }
 }
