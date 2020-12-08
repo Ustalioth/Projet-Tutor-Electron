@@ -35,5 +35,19 @@
       "points": 52,
       "id": 7
     }
+  ],
+  "themes":[
+    {
+      "id":0,
+      "name":"Histoire"
+    },
+    {
+      "id":1,
+      "name":"Géographie"
+    },
+    {
+      "id":2,
+      "name":"WebDev"
+    }
   ]
 }
