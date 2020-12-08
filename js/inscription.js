@@ -40,11 +40,16 @@ form.addEventListener("submit", function (e) {
   let confirmPassword = document.getElementById("confirmPassword");
 
   if (readyToAdd(validPass(password.value, confirmPassword.value), noEmpty())) {
-    http("http://localhost:3000/users", "POST", {
-      name: firstName.value + " " + lastName.value,
-      email: email.value,
-      password: password.value,
-      points: 0,
-    });
+    http(
+      "http://localhost:3000/users",
+      "POST",
+      {
+        name: firstName.value + " " + lastName.value,
+        email: email.value,
+        password: password.value,
+        points: 0,
+      },
+      (window.location.href = "../html/connection.html")
+    );
   }
 });

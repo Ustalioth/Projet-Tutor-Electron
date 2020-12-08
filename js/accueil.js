@@ -5,4 +5,4 @@ let user = JSON.parse(localStorage.getItem("user"));
 
 console.log(user.points);
 
-points.value = user.points;
+points.innerHTML = user.points;

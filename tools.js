@@ -13,12 +13,14 @@ function http(url, method, payload, callback) {
     options.body = JSON.stringify(payload);
   }
 
-
   fetch(url, options)
     .then((res) => res.json())
     .then((data) => {
-      if (callback) callback(data, payload);
-      else console.log(data);
+      if (callback && payload) {
+        callback(data, payload);
+      } else if (callback) {
+        callback(data);
+      } else console.log(data);
     })
     .catch((error) => console.error(error));
 }
