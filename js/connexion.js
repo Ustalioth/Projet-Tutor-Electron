@@ -3,15 +3,26 @@ import { http } from "../tools.js";
 let form = document.getElementById("connectForm");
 
 function checkConnectionData(data, connectionData) {
+  let index = 1;
+
+  data = sortByScore(data);
   data.forEach((element) => {
     if (element.email === connectionData.email) {
       if (element.password === connectionData.password) {
-        console.log(element);
+        localStorage.setItem("position", index);
         localStorage.setItem("user", JSON.stringify(element));
         window.location.href = "../html/accueil.html";
       }
     }
+    index++;
   });
+}
+
+function sortByScore(json) {
+  let sortedJson = json.sort(function (a, b) {
+    return a.points < b.points ? 1 : a.points > b.points ? -1 : 0;
+  });
+  return sortedJson;
 }
 
 form.addEventListener("submit", function (e) {

@@ -1,37 +1,38 @@
 {
   "users": [
     {
-      "name": "r r",
+      "name": "Gab",
       "email": "r",
       "password": "r",
+      "points": 5,
       "id": 3
     },
     {
       "name": "Michel Thiery",
       "email": "m@t.fr",
       "password": "z",
-      "points": 0,
+      "points": 4,
       "id": 4
     },
     {
-      "name": "a b",
+      "name": "Ui",
       "email": "c",
       "password": "a",
       "points": 0,
       "id": 5
     },
     {
-      "name": "a a",
+      "name": "Test",
       "email": "a",
       "password": "b",
-      "points": 0,
+      "points": 8,
       "id": 6
     },
     {
-      "name": "a a",
-      "email": "a",
+      "name": "Aled michel",
+      "email": "a@a.fr",
       "password": "aze",
-      "points": 0,
+      "points": 52,
       "id": 7
     }
   ]
