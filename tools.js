@@ -6,11 +6,13 @@ function http(url, method, payload, callback) {
     headers: {
       "Content-Type": "application/json",
     },
+    method: method ? method : "POST",
   };
 
   if (payload && options.method !== "GET") {
     options.body = JSON.stringify(payload);
   }
+
 
   fetch(url, options)
     .then((res) => res.json())
