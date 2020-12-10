@@ -12,19 +12,43 @@ let startSolo = document.getElementById("startSolo");
 function fillSelectTheme(themes) {
   const body = document.body;
   let selectThemes = document.createElement("select");
+  selectThemes.id = "ThemeList";
   themes.forEach((theme) => {
     let themeOption = document.createElement("option");
     themeOption.text = theme.name;
-    themeOption.id = theme.id;
+    themeOption.value = theme.id;
     selectThemes.add(themeOption);
   });
 
   body.appendChild(selectThemes);
+
+  startSolo.innerHTML = "Valider";
+}
+
+function selectQuestionAndStart(questions) {
+  console.log(questions);
+  let selectedQuestions = [];
+  for (let i = 0; i < 4; i++) {
+    selectedQuestions.push(
+      questions[Math.floor(Math.random() * questions.length)] // on sélectionne une question parmis les questions qui correspondent au thème
+    );
+  }
+  console.log(selectedQuestions);
 }
 
 points.innerHTML = user.points;
 place.innerHTML = `${position} ème sur ${playerCount}`;
 
 startSolo.addEventListener("click", function (e) {
-  http("http://localhost:3000/themes", "GET", undefined, fillSelectTheme);
+  if (startSolo.innerText === "Démarrer un quizz solo") {
+    http("http://localhost:3000/themes", "GET", undefined, fillSelectTheme);
+  } else {
+    let themeId = document.getElementById("ThemeList").value;
+    http(
+      "http://localhost:3000/questions?thème=" + themeId,
+      "GET",
+      undefined,
+      selectQuestionAndStart
+    );
+  }
 });
