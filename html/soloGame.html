@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'"
+    />
+
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <title>Accueil</title>
+  </head>
+  <body>
+    <h1 id="Question"></h1>
+    <form id="answers">
+      <input type="radio" name="answer" id="1" />
+      <input type="radio" name="answer" id="2" />
+      <input type="radio" name="answer" id="3" />
+      <input type="radio" name="answer" id="4" />
+      <input type="submit" value="Répondre" />
+    </form>
+
+    <p>Temps restant : <span id="time">10</span> secondes</p>
+    <p>Question <span id="index">1</span>/4</p>
+
+    <!-- You can also require other files to run in this process -->
+    <script type="module" src="../tools.js"></script>
+    <script type="module" src="../js/soloGame.js"></script>
+  </body>
+</html>

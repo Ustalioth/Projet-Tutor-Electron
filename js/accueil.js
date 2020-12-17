@@ -33,7 +33,14 @@ function selectQuestionAndStart(questions) {
       questions[Math.floor(Math.random() * questions.length)] // on sélectionne une question parmis les questions qui correspondent au thème
     );
   }
-  console.log(selectedQuestions);
+  http("http://localhost:3000/quizzes", "POST", {
+    mode: 0,
+    questions: selectedQuestions,
+    user1: JSON.parse(localStorage.getItem("user")).id,
+    startAt: new Date(),
+  });
+  localStorage.setItem("quizz", selectedQuestions);
+  window.location.href = "../html/soloGame.html";
 }
 
 points.innerHTML = user.points;
@@ -45,7 +52,7 @@ startSolo.addEventListener("click", function (e) {
   } else {
     let themeId = document.getElementById("ThemeList").value;
     http(
-      "http://localhost:3000/questions?thème=" + themeId,
+      "http://localhost:3000/questions?theme=" + themeId,
       "GET",
       undefined,
       selectQuestionAndStart
