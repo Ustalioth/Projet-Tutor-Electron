@@ -9,7 +9,8 @@ let playerCount = localStorage.getItem("playerCount");
 
 let startSolo = document.getElementById("startSolo");
 
-function fillSelectTheme(themes) {
+function fillSelectTheme(result) {
+  let themes = result.themes;
   const body = document.body;
   let selectThemes = document.createElement("select");
   selectThemes.id = "ThemeList";
@@ -19,7 +20,6 @@ function fillSelectTheme(themes) {
     themeOption.value = theme.id;
     selectThemes.add(themeOption);
   });
-
   body.appendChild(selectThemes);
 
   startSolo.innerHTML = "Valider";
@@ -48,11 +48,16 @@ place.innerHTML = `${position} ème sur ${playerCount}`;
 
 startSolo.addEventListener("click", function (e) {
   if (startSolo.innerText === "Démarrer un quizz solo") {
-    http("http://localhost:3000/themes", "GET", undefined, fillSelectTheme);
+    http(
+      "http://duelquizz-php/api/user/getThemes",
+      "GET",
+      undefined,
+      fillSelectTheme
+    );
   } else {
     let themeId = document.getElementById("ThemeList").value;
     http(
-      "http://localhost:3000/questions?theme=" + themeId,
+      "http://duelquizz-php/api/themeQuestions/" + themeId,
       "GET",
       undefined,
       selectQuestionAndStart
