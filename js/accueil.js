@@ -1,4 +1,4 @@
-import { http } from "../tools.js";
+import { http, formatDate } from "../tools.js";
 
 let points = document.getElementById("points");
 let place = document.getElementById("place");
@@ -25,19 +25,19 @@ function fillSelectTheme(result) {
   startSolo.innerHTML = "Valider";
 }
 
-function selectQuestionAndStart(questions) {
-  console.log(questions);
+function selectQuestionAndStart(result) {
+  let questions = result.questions;
   let selectedQuestions = [];
   for (let i = 0; i < 4; i++) {
     selectedQuestions.push(
       questions[Math.floor(Math.random() * questions.length)] // on sélectionne une question parmis les questions qui correspondent au thème
     );
   }
-  http("http://localhost:3000/quizzes", "POST", {
+  http("http://duelquizz-php/api/user/insertQuizz", "POST", {
     mode: 0,
-    questions: selectedQuestions,
+    //questions: selectedQuestions,
     user1: JSON.parse(localStorage.getItem("user")).id,
-    startAt: new Date(),
+    startAt: formatDate(new Date()),
   });
   localStorage.setItem("quizz", selectedQuestions);
   window.location.href = "../html/soloGame.html";
@@ -49,7 +49,7 @@ place.innerHTML = `${position} ème sur ${playerCount}`;
 startSolo.addEventListener("click", function (e) {
   if (startSolo.innerText === "Démarrer un quizz solo") {
     http(
-      "http://duelquizz-php/api/user/getThemes",
+      "http://duelquizz-php/api/user/themes",
       "GET",
       undefined,
       fillSelectTheme
@@ -57,7 +57,7 @@ startSolo.addEventListener("click", function (e) {
   } else {
     let themeId = document.getElementById("ThemeList").value;
     http(
-      "http://duelquizz-php/api/themeQuestions/" + themeId,
+      "http://duelquizz-php/api/user/themeQuestions/" + themeId,
       "GET",
       undefined,
       selectQuestionAndStart

@@ -2,21 +2,11 @@ import { http } from "../tools.js";
 
 let form = document.getElementById("connectForm");
 
-function checkConnectionData(data, connectionData) {
-  let index = 1;
-
-  let sortedData = sortByScore(data);
-  sortedData.forEach((element) => {
-    if (element.email === connectionData.email) {
-      if (element.password === connectionData.password) {
-        localStorage.setItem("playerCount", Object.keys(sortedData).length);
-        localStorage.setItem("position", index);
-        localStorage.setItem("user", JSON.stringify(element));
-        window.location.href = "../html/accueil.html";
-      }
-    }
-    index++;
-  });
+function storeToken(result) {
+  if (result.token) {
+    localStorage.setItem("token", result.token);
+    window.location = "./accueil.html";
+  }
 }
 
 function sortByScore(json) {
@@ -31,11 +21,7 @@ form.addEventListener("submit", function (e) {
 
   let email = document.getElementById("email").value;
   let password = document.getElementById("password").value;
+  let payload = { email: email, password: password };
 
-  http(
-    "http://localhost:3000/users",
-    "GET",
-    { email: email, password: password },
-    checkConnectionData
-  );
+  http("http://duelquizz-php/api/user/login", "POST", payload, storeToken);
 });

@@ -5,6 +5,7 @@ let index = 1;
 
 let indexDOM = document.getElementById("index");
 let questionDOM = document.getElementById("Question");
+let timeDOM = document.getElementById("time");
 let possibleanswersDOM = [];
 
 for (let i = 1; i < 5; i++) {
@@ -24,7 +25,7 @@ function displayQuestion(quizzes) {
 setInterval(function () {
   if (leftTime != 0) {
     leftTime = leftTime - 1;
-    document.getElementById("time").innerHTML = leftTime;
+    timeDOM.innerHTML = leftTime;
   } else {
     nextQuestion();
   }
@@ -39,7 +40,7 @@ function nextQuestion() {
     http("http://localhost:3000/quizzes", "GET", undefined, displayQuestion);
   } else {
     document.body.innerHTML =
-      "<div>Fin du quizz. Points : <span id='points'></span>/4</div>";
+      "<div>Fin du quizz. Points : <span id='points'></span>/4</div><a href='./accueil.html'>Retour à l'accueil</a>";
   }
 }
 
