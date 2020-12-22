@@ -12,7 +12,12 @@ for (let i = 1; i < 5; i++) {
   possibleanswersDOM.push(document.getElementById(String(i)));
 }
 
-http("http://localhost:3000/quizzes", "GET", undefined, displayQuestion);
+http("http://duelquizz-php/api/user/checktoken", "POST", {
+  // vérification de la validité du token
+  token: localStorage.getItem("token"),
+});
+
+//http("http://localhost:3000/quizzes", "GET", undefined, displayQuestion);
 
 function displayQuestion(quizzes) {
   let quizz = quizzes[0];
@@ -37,7 +42,7 @@ function nextQuestion() {
     indexDOM.innerHTML = index;
     clearAllRadios();
     leftTime = 10;
-    http("http://localhost:3000/quizzes", "GET", undefined, displayQuestion);
+    //http("http://localhost:3000/quizzes", "GET", undefined, displayQuestion);
   } else {
     document.body.innerHTML =
       "<div>Fin du quizz. Points : <span id='points'></span>/4</div><a href='./accueil.html'>Retour à l'accueil</a>";

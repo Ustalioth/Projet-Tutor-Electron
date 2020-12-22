@@ -15,6 +15,8 @@ function http(url, method, payload, callback) {
     options.body = formData;
   }
 
+  let action = url.replace("http://duelquizz-php/api/user/", "");
+
   fetch(url, options)
     .then((res) => res.json())
     .then((data) => {
@@ -22,7 +24,22 @@ function http(url, method, payload, callback) {
         callback(data);
       } else console.log(data);
     })
-    .catch((error) => console.error(error));
+    .catch((error) => throwError(action, error));
+}
+
+function throwError(action, error) {
+  switch (action) {
+    case "checktoken":
+      window.location = "../html/connexion.html";
+      alert("Token invalide, veuillez vous reconnecter");
+      break;
+    case "login":
+      alert("Identifiant(s) incorrect(s)");
+      break;
+    default:
+      alert(error);
+      break;
+  }
 }
 
 function formatDate(date) {

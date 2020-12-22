@@ -9,6 +9,11 @@ let playerCount = localStorage.getItem("playerCount");
 
 let startSolo = document.getElementById("startSolo");
 
+http("http://duelquizz-php/api/user/checktoken", "POST", {
+  // vérification de la validité du token
+  token: localStorage.getItem("token"),
+});
+
 function fillSelectTheme(result) {
   let themes = result.themes;
   const body = document.body;
@@ -27,15 +32,18 @@ function fillSelectTheme(result) {
 
 function selectQuestionAndStart(result) {
   let questions = result.questions;
+  console.log(questions);
+  return;
   let selectedQuestions = [];
   for (let i = 0; i < 4; i++) {
     selectedQuestions.push(
       questions[Math.floor(Math.random() * questions.length)] // on sélectionne une question parmis les questions qui correspondent au thème
     );
   }
+
   http("http://duelquizz-php/api/user/insertQuizz", "POST", {
     mode: 0,
-    //questions: selectedQuestions,
+    questions: selectedQuestions,
     user1: JSON.parse(localStorage.getItem("user")).id,
     startAt: formatDate(new Date()),
   });
