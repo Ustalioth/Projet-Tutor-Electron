@@ -3,6 +3,9 @@ import { http } from "../tools.js";
 let form = document.getElementById("connectForm");
 
 function storeToken(result) {
+  if (result.user) {
+    console.log("result user : " + JSON.stringify(result.user));
+  }
   if (result.token) {
     localStorage.setItem("token", result.token);
     window.location = "./accueil.html";

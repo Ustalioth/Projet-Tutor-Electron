@@ -31,13 +31,13 @@ function throwError(action, error) {
   switch (action) {
     case "checktoken":
       window.location = "../html/connexion.html";
-      alert("Token invalide, veuillez vous reconnecter");
-      break;
+      console.log("Token invalide, veuillez vous reconnecter");
+      return;
     case "login":
-      alert("Identifiant(s) incorrect(s)");
+      console.log("Identifiant(s) incorrect(s)");
       break;
     default:
-      alert(error);
+      console.log(error);
       break;
   }
 }

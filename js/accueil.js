@@ -3,16 +3,42 @@ import { http, formatDate } from "../tools.js";
 let points = document.getElementById("points");
 let place = document.getElementById("place");
 
-let user = JSON.parse(localStorage.getItem("user"));
-let position = localStorage.getItem("position");
-let playerCount = localStorage.getItem("playerCount");
-
 let startSolo = document.getElementById("startSolo");
 
-http("http://duelquizz-php/api/user/checktoken", "POST", {
-  // vérification de la validité du token
-  token: localStorage.getItem("token"),
-});
+http(
+  "http://duelquizz-php/api/user/checktoken",
+  "POST",
+  {
+    // vérification de la validité du token
+    token: localStorage.getItem("token"),
+  },
+  storeUserData
+);
+
+function storeUserData(result) {
+  let id = result.user.id;
+  localStorage.setItem("id", id);
+  points.innerHTML = result.user.points;
+  http(
+    "http://duelquizz-php/api/user/getPosition/" + id,
+    "GET",
+    undefined,
+    displayPosition
+  );
+}
+
+function displayPosition(result) {
+  let position = result.position;
+  let suffixe;
+
+  if (position === 1) {
+    suffixe = "er";
+  } else {
+    suffixe = "ème";
+  }
+
+  place.innerHTML = `${result.position} ${suffixe} sur ${result.outOf}`;
+}
 
 function fillSelectTheme(result) {
   let themes = result.themes;
@@ -31,9 +57,8 @@ function fillSelectTheme(result) {
 }
 
 function selectQuestionAndStart(result) {
+  console.log(result.questions[0].id);
   let questions = result.questions;
-  console.log(questions);
-  return;
   let selectedQuestions = [];
   for (let i = 0; i < 4; i++) {
     selectedQuestions.push(
@@ -50,9 +75,6 @@ function selectQuestionAndStart(result) {
   localStorage.setItem("quizz", selectedQuestions);
   window.location.href = "../html/soloGame.html";
 }
-
-points.innerHTML = user.points;
-place.innerHTML = `${position} ème sur ${playerCount}`;
 
 startSolo.addEventListener("click", function (e) {
   if (startSolo.innerText === "Démarrer un quizz solo") {
