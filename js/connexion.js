@@ -3,20 +3,10 @@ import { http } from "../tools.js";
 let form = document.getElementById("connectForm");
 
 function storeToken(result) {
-  if (result.user) {
-    console.log("result user : " + JSON.stringify(result.user));
-  }
   if (result.token) {
     localStorage.setItem("token", result.token);
     window.location = "./accueil.html";
   }
-}
-
-function sortByScore(json) {
-  let sortedJson = json.sort(function (a, b) {
-    return a.points < b.points ? 1 : a.points > b.points ? -1 : 0;
-  });
-  return sortedJson;
 }
 
 form.addEventListener("submit", function (e) {

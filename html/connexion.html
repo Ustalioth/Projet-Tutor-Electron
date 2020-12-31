@@ -13,16 +13,39 @@
       content="default-src 'self'; script-src 'self'"
     />
     <title>Connexion</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
-    <h1>Se connecter</h1>
-    <form id="connectForm">
-      <input required id="email" type="email" placeholder="Email" />
-      <input required id="password" type="password" placeholder="Password" />
-      <button id="submitButton" type="submit">Valider</button>
-    </form>
-
-    Pas de compte ?<a href="./inscription.html">S'inscrire</a>
+    <div class="container-fluid">
+      <div class="container">
+        <div class="row">
+          <h1>Se connecter</h1>
+          <form id="connectForm">
+            <input required id="email" type="email" placeholder="Email" />
+            <input
+              required
+              id="password"
+              type="password"
+              placeholder="Password"
+            />
+            <button id="submitButton" type="submit" class="btn btn-primary">
+              Valider
+            </button>
+          </form>
+          <div class="col-md-4">
+            Pas de compte ?<a href="./inscription.html" class="btn btn-primary"
+              >S'inscrire</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- You can also require other files to run in this process -->
     <script type="module" src="../tools.js"></script>
