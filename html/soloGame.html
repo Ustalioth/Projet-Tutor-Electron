@@ -20,27 +20,33 @@
       integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
       crossorigin="anonymous"
     />
+
+    <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
-    <h1 id="Question"></h1>
-    <form id="answers">
-      <label id="1" for="1radio"></label>
-      <input type="radio" name="answer" id="1radio" />
+    <div class="container-fluid gray">
+      <div class="container gameZone">
+        <h1 id="Question"></h1>
+        <form id="answers">
+          <label id="1" for="1radio"></label>
+          <input type="radio" name="answer" id="1radio" />
 
-      <label id="2" for="2radio"></label>
-      <input type="radio" name="answer" id="2radio" />
+          <label id="2" for="2radio"></label>
+          <input type="radio" name="answer" id="2radio" />
 
-      <label id="3" for="3radio"></label>
-      <input type="radio" name="answer" id="3radio" />
+          <label id="3" for="3radio"></label>
+          <input type="radio" name="answer" id="3radio" />
 
-      <label id="4" for="4radio"></label>
-      <input type="radio" name="answer" id="4radio" />
+          <label id="4" for="4radio"></label>
+          <input type="radio" name="answer" id="4radio" />
 
-      <input type="submit" value="Répondre" />
-    </form>
+          <input type="submit" value="Répondre" />
+        </form>
 
-    <p>Temps restant : <span id="time">10</span> secondes</p>
-    <p>Question <span id="index">1</span>/4</p>
+        <p>Temps restant : <span id="time">10</span> secondes</p>
+        <p>Question <span id="index">1</span>/4</p>
+      </div>
+    </div>
 
     <!-- You can also require other files to run in this process -->
     <script type="module" src="../tools.js"></script>

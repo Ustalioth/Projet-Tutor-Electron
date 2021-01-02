@@ -1,7 +1,8 @@
-import { http, formatDate } from "../tools.js";
+import { http } from "../tools.js";
 
 let points = document.getElementById("points");
 let place = document.getElementById("place");
+let bienvenue = document.getElementById("nom");
 
 let startSolo = document.getElementById("startSolo");
 
@@ -19,6 +20,7 @@ function storeUserData(result) {
   let id = result.user.id;
   localStorage.setItem("userid", id);
   points.innerHTML = result.user.points;
+  bienvenue.innerHTML = result.user.firstName + " " + result.user.lastName;
   http(
     "http://duelquizz-php/api/user/getPosition/" + id,
     "GET",
@@ -84,11 +86,13 @@ startSolo.addEventListener("click", function (e) {
     );
   } else {
     let themeId = document.getElementById("ThemeList").value;
+    console.log("user1 : " + JSON.parse(localStorage.getItem("userid")));
+    console.log("mode : " + themeId);
     http("http://duelquizz-php/api/user/persistQuizz", "POST", {
       mode: 0,
       user1: JSON.parse(localStorage.getItem("userid")),
       themeId: themeId,
     });
+    window.location.href = "../html/soloGame.html";
   }
-  window.location.href = "../html/soloGame.html";
 });

@@ -3,7 +3,7 @@ export { http, formatDate };
 function http(url, method, payload, callback) {
   const options = {
     method: method ? method : "GET",
-    headers: {},
+    headers: { "Content-Type": "application/json" },
   };
 
   if (payload && options.method !== "GET") {
@@ -37,7 +37,7 @@ function throwError(action, error) {
       console.log("Identifiant(s) incorrect(s)");
       break;
     default:
-      console.log(error);
+      console.log("error : " + error);
       break;
   }
 }
