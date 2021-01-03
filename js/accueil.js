@@ -109,7 +109,6 @@ startSolo.addEventListener("click", function (e) {
 
 function startGame(data) {
   localStorage.setItem("questions", JSON.stringify(data.questions));
-  console.log(localStorage.getItem("questions"));
   localStorage.setItem("answers", JSON.stringify(data.possibleanswers));
   window.location.href = "../html/game.html";
 }

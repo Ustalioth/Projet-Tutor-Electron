@@ -6,33 +6,41 @@ let index = 0;
 let indexDOM = document.getElementById("index");
 let questionDOM = document.getElementById("Question");
 let timeDOM = document.getElementById("time");
-let possibleanswersDOM = [];
+let labels = [];
+
+let earnedPoints = 0;
+
+let answeredArray = []; //Array qui contient toutes les réponses du joueur
 
 const questions = JSON.parse(localStorage.getItem("questions"));
-const answers = JSON.parse(localStorage.getItem("answers"));
+const allAnswers = JSON.parse(localStorage.getItem("answers"));
 const radioButtons = document.getElementsByName("answer");
 const errorMessageDOM = document.getElementById("errorMessage");
+
+console.log(allAnswers);
 
 localStorage.removeItem("questions");
 localStorage.removeItem("answers");
 
-console.log(answers);
-
 for (let i = 1; i < 5; i++) {
-  possibleanswersDOM.push(document.getElementById(String(i)));
+  labels.push(document.getElementById(String(i)));
+
+  console.log(radioButtons);
 }
 
 displayQuestion();
 
 function displayQuestion() {
   questionDOM.innerHTML = questions[index].label;
-  possibleanswersDOM.forEach((possibleanswerDOM, indexForeach) => {
-    possibleanswerDOM.innerHTML = answers[index][indexForeach].label;
-    possibleanswerDOM.value = answers[index][indexForeach].id;
+  labels.forEach((label, indexForeach) => {
+    label.innerHTML = allAnswers[index][indexForeach].label;
+  });
+  radioButtons.forEach((radioButton, indexForeach) => {
+    radioButton.value = allAnswers[index][indexForeach].id;
   });
 }
 
-setInterval(function () {
+let clock = setInterval(function () {
   if (leftTime != 0) {
     leftTime = leftTime - 1;
     timeDOM.innerHTML = leftTime;
@@ -42,27 +50,77 @@ setInterval(function () {
 }, 1000);
 
 function nextQuestion(bypass = false) {
-  if (index !== 3) {
-    let answered;
-    for (let i = 1; i < radioButtons.length; i++) {
-      if (radioButtons[i].checked) {
-        answered = radioButtons[i].value;
+  // Bypass sert à ne pas vérifier le fait qu'une réponse ai été sélectionnée si le timer atteint 0
+  if (index <= 3) {
+    let answered = getAnswer();
+    if (bypass === true) {
+      answeredArray.push(answered);
+    } else {
+      let checked = checkIfChecked(answered); //checked prend false si aucun bouton n'est coché ou la value du bouton coché
+
+      if (checked !== false) {
+        answeredArray.push(answered);
+      } else {
+        return;
       }
     }
-    if (answered === undefined && bypass === false) {
-      errorMessageDOM.innerHTML = "Veuillez sélectionner une réponse";
-      return;
+    if (index !== 3) {
+      index++;
+      indexDOM.innerHTML = index + 1;
+      clearAllRadios();
+      displayQuestion();
+      leftTime = 10;
+      questionDOM.innerHTML = questions[index].label;
+      if (errorMessageDOM.innerHTML !== "") {
+        errorMessageDOM.innerHTML = "";
+      }
+    } else {
+      clearInterval(clock);
+      let correctIds = getCorrectAnswers(); //Array qui contient l'id de la bonne réponse de chaque question
+      console.log(answeredArray);
+
+      answeredArray.forEach((answered, index) => {
+        if (answered === correctIds[index]) {
+          earnedPoints++;
+        }
+      });
+
+      document.body.innerHTML = `<div>Fin du quizz. Points : ${earnedPoints}/4</div><a href='./accueil.html'>Retour à l'accueil</a>`;
     }
-    index++;
-    indexDOM.innerHTML = index + 1;
-    clearAllRadios();
-    displayQuestion();
-    leftTime = 10;
-    questionDOM.innerHTML = questions[index].label;
-  } else {
-    document.body.innerHTML =
-      "<div>Fin du quizz. Points : <span id='points'></span>/4</div><a href='./accueil.html'>Retour à l'accueil</a>";
   }
+}
+
+function checkIfChecked(answered) {
+  if (answered === undefined) {
+    errorMessageDOM.innerHTML = "Veuillez sélectionner une réponse";
+    return false;
+  }
+}
+
+function getAnswer() {
+  let answered;
+  for (let i = 0; i < radioButtons.length; i++) {
+    if (radioButtons[i].checked) {
+      answered = radioButtons[i].value;
+      return answered;
+    }
+  }
+}
+
+function getCorrectAnswers() {
+  let correctIds = [];
+
+  allAnswers.forEach((answersToOneQuestion) => {
+    //Foreach sur l'array qui contient toutes les réponses à toutes les questions
+
+    answersToOneQuestion.forEach((answer) => {
+      //Foreach sur l'array qui contient les réponses d'une question
+      if (Number(answer.correct) === 1) {
+        correctIds.push(answer.id);
+      }
+    });
+  });
+  return correctIds;
 }
 
 function clearAllRadios() {
