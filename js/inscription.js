@@ -31,7 +31,6 @@ function readyToAdd(b1, b2) {
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
-  let element = 0;
 
   let firstName = document.getElementById("firstName");
   let lastName = document.getElementById("lastName");

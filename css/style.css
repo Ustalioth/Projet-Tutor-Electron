@@ -6,3 +6,11 @@
 .gray {
   background-color: gray;
 }
+
+ul {
+  list-style:none;
+}
+
+.error{
+  color:red;
+}

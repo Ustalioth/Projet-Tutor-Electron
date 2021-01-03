@@ -1,9 +1,9 @@
 export { http, formatDate };
 
-function http(url, method, payload, callback) {
+function http(url, method, payload, callback, token) {
   const options = {
     method: method ? method : "GET",
-    headers: { "Content-Type": "application/json" },
+    headers: { Authorization: token },
   };
 
   if (payload && options.method !== "GET") {
@@ -11,13 +11,12 @@ function http(url, method, payload, callback) {
     for (let k in payload) {
       formData.append(k, payload[k]);
     }
-
     options.body = formData;
   }
 
   let action = url.replace("http://duelquizz-php/api/user/", "");
 
-  fetch(url, options)
+  return fetch(url, options)
     .then((res) => res.json())
     .then((data) => {
       if (callback) {

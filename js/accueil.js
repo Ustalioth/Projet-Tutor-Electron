@@ -6,26 +6,32 @@ let bienvenue = document.getElementById("nom");
 
 let startSolo = document.getElementById("startSolo");
 
+var token = localStorage.getItem("token");
+
 http(
-  "http://duelquizz-php/api/user/checktoken",
-  "POST",
+  "http://duelquizz-php/api/user/getUserData",
+  "GET",
   {
     // vérification de la validité du token
-    token: localStorage.getItem("token"),
+    token: token,
   },
-  storeUserData
+  storeUserData,
+  token
 );
 
 function storeUserData(result) {
-  let id = result.user.id;
-  localStorage.setItem("userid", id);
-  points.innerHTML = result.user.points;
-  bienvenue.innerHTML = result.user.firstName + " " + result.user.lastName;
+  let id = sessionStorage.getItem("id");
+  points.innerHTML = sessionStorage.getItem("points");
+  bienvenue.innerHTML =
+    sessionStorage.getItem("firstName") +
+    " " +
+    sessionStorage.getItem("lastName");
   http(
     "http://duelquizz-php/api/user/getPosition/" + id,
     "GET",
     undefined,
-    displayPosition
+    displayPosition,
+    token
   );
 }
 
@@ -82,17 +88,28 @@ startSolo.addEventListener("click", function (e) {
       "http://duelquizz-php/api/user/themes",
       "GET",
       undefined,
-      fillSelectTheme
+      fillSelectTheme,
+      token
     );
   } else {
     let themeId = document.getElementById("ThemeList").value;
-    console.log("user1 : " + JSON.parse(localStorage.getItem("userid")));
-    console.log("mode : " + themeId);
-    http("http://duelquizz-php/api/user/persistQuizz", "POST", {
-      mode: 0,
-      user1: JSON.parse(localStorage.getItem("userid")),
-      themeId: themeId,
-    });
-    window.location.href = "../html/soloGame.html";
+    http(
+      "http://duelquizz-php/api/user/persistQuizz",
+      "POST",
+      {
+        mode: 0,
+        user1: JSON.parse(localStorage.getItem("userid")),
+        themeId: themeId,
+      },
+      startGame,
+      token
+    );
   }
 });
+
+function startGame(data) {
+  localStorage.setItem("questions", JSON.stringify(data.questions));
+  console.log(localStorage.getItem("questions"));
+  localStorage.setItem("answers", JSON.stringify(data.possibleanswers));
+  window.location.href = "../html/game.html";
+}
