@@ -2,12 +2,13 @@ import { http } from "../tools.js";
 
 let form = document.getElementById("inscriptionForm");
 let inputs = document.getElementsByTagName("input");
+const errorMessageDOM = document.getElementById("errorMessage");
 
 function validPass(p1, p2) {
   if (p1 == p2) {
     return true;
   } else {
-    alert("Les mots de passes sont différents");
+    errorMessageDOM.innerHTML = "Les mots de passes sont différents";
     return false;
   }
 }
@@ -16,7 +17,8 @@ function noEmpty() {
   let element = 0;
   for (element of inputs) {
     if (element.value === "") {
-      alert("le champ : " + element.id + " n'a pas été rempli !");
+      errorMessageDOM.innerHTML =
+        "Le champ " + element.id + " n'a pas été rempli !";
       return false;
     }
   }
@@ -49,7 +51,7 @@ form.addEventListener("submit", function (e) {
         password: password.value,
       },
       redirect
-    );
+    ).catch((error) => (errorMessageDOM.innerHTML = "Identifiants invalides"));
   }
 });
 
