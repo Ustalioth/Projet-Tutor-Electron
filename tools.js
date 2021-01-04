@@ -38,24 +38,23 @@ function http(url, method, payload, callback, token) {
       if (callback) {
         callback(data);
       } else console.log(data);
-    })
-    .catch((error) => throwError(action, error));
+    });
 }
 
-function throwError(action, error) {
-  switch (action) {
-    case "checktoken":
-      window.location = "../html/connexion.html";
-      console.log("Token invalide, veuillez vous reconnecter");
-      return;
-    case "login":
-      console.log("Identifiant(s) incorrect(s)");
-      break;
-    default:
-      console.log("error : " + error);
-      break;
-  }
-}
+// function throwError(action, error) {
+//   switch (action) {
+//     case "checktoken":
+//       window.location = "../html/connexion.html";
+//       console.log("Token invalide, veuillez vous reconnecter");
+//       return;
+//     case "login":
+//       console.log("Identifiant(s) incorrect(s)");
+//       break;
+//     default:
+//       console.log("error : " + error);
+//       break;
+//   }
+// }
 
 function formatDate(date) {
   var d = new Date(date),
