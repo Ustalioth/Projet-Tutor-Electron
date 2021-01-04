@@ -2,12 +2,13 @@ import { http } from "../tools.js";
 
 let form = document.getElementById("inscriptionForm");
 let inputs = document.getElementsByTagName("input");
+const errorMessageDOM = document.getElementById("errorMessage");
 
 function validPass(p1, p2) {
   if (p1 == p2) {
     return true;
   } else {
-    alert("Les mots de passes sont différents");
+    errorMessageDOM.innerHTML = "Les mots de passes sont différents";
     return false;
   }
 }
@@ -16,7 +17,8 @@ function noEmpty() {
   let element = 0;
   for (element of inputs) {
     if (element.value === "") {
-      alert("le champ : " + element.id + " n'a pas été rempli !");
+      errorMessageDOM.innerHTML =
+        "Le champ " + element.id + " n'a pas été rempli !";
       return false;
     }
   }
@@ -40,15 +42,19 @@ form.addEventListener("submit", function (e) {
 
   if (readyToAdd(validPass(password.value, confirmPassword.value), noEmpty())) {
     http(
-      "http://localhost:3000/users",
+      "http://duelquizz-php/api/user/register",
       "POST",
       {
-        name: firstName.value + " " + lastName.value,
+        firstName: firstName.value,
+        lastName: lastName.value,
         email: email.value,
         password: password.value,
-        points: 0,
       },
-      (window.location.href = "../html/connection.html")
-    );
+      redirect
+    ).catch((error) => (errorMessageDOM.innerHTML = error));
   }
 });
+
+function redirect() {
+  window.location.href = "../html/connexion.html";
+}

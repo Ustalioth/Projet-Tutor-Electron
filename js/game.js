@@ -17,7 +17,7 @@ const allAnswers = JSON.parse(localStorage.getItem("answers"));
 const radioButtons = document.getElementsByName("answer");
 const errorMessageDOM = document.getElementById("errorMessage");
 
-console.log(allAnswers);
+const token = localStorage.getItem("token");
 
 localStorage.removeItem("questions");
 localStorage.removeItem("answers");
@@ -65,6 +65,7 @@ function nextQuestion(bypass = false) {
       }
     }
     if (index !== 3) {
+      //Pas besoin de faire tout ça si il s'agit de la dernière question
       index++;
       indexDOM.innerHTML = index + 1;
       clearAllRadios();
@@ -77,7 +78,6 @@ function nextQuestion(bypass = false) {
     } else {
       clearInterval(clock);
       let correctIds = getCorrectAnswers(); //Array qui contient l'id de la bonne réponse de chaque question
-      console.log(answeredArray);
 
       answeredArray.forEach((answered, index) => {
         if (answered === correctIds[index]) {
@@ -86,6 +86,16 @@ function nextQuestion(bypass = false) {
       });
 
       document.body.innerHTML = `<div>Fin du quizz. Points : ${earnedPoints}/4</div><a href='./accueil.html'>Retour à l'accueil</a>`;
+
+      http(
+        "http://duelquizz-php/api/user/updatePoints",
+        "PATCH",
+        {
+          points: earnedPoints,
+        },
+        undefined,
+        token
+      );
     }
   }
 }

@@ -12,7 +12,7 @@
       http-equiv="X-Content-Security-Policy"
       content="default-src 'self'; script-src 'self'"
     />
-    <title>Accueil</title>
+    <title>Lobby</title>
 
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
@@ -23,29 +23,10 @@
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
-    <h1>Accueil</h1>
-    <ul>
-      <li>Bienvenue <span id="nom"></span></li>
-      <li>Points : <span id="points"></span></li>
-      <li>Place dans le classement : <span id="place"></span></li>
-    </ul>
-
-    <ul id="buttons">
-      <li>
-        <button id="startSolo" class="btn btn-primary">
-          Démarrer un quizz solo
-        </button>
-      </li>
-      <li>
-        <button id="startDuo" class="btn btn-primary">
-          Démarrer un quizz duo
-        </button>
-      </li>
-      <li><a id="disconnect" class="btn btn-secondary">Se déconnecter</a></li>
-    </ul>
+    <p>En attente d'un deuxième joueur<span id="points"></span></p>
 
     <!-- You can also require other files to run in this process -->
     <script type="module" src="../tools.js"></script>
-    <script type="module" src="../js/accueil.js"></script>
+    <script type="module" src="../js/lobbyDuo.js"></script>
   </body>
 </html>
