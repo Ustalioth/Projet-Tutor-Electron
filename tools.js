@@ -1,20 +1,36 @@
 export { http, formatDate };
 
 function http(url, method, payload, callback, token) {
+  let action = url.replace("http://duelquizz-php/api/user/", "");
+  let myHeaders = new Headers();
+
+  myHeaders.append("Authorization", token);
+  if (action === "updatePoints") {
+    myHeaders.append(
+      "Content-Type",
+      "application/x-www-form-urlencoded;charset=UTF-8"
+    );
+  }
+
   const options = {
     method: method ? method : "GET",
-    headers: { Authorization: token },
+    headers: myHeaders,
   };
 
   if (payload && options.method !== "GET") {
     const formData = new FormData();
     for (let k in payload) {
-      formData.append(k, payload[k]);
+      if (action === "updatePoints") {
+        formData.append(
+          encodeURIComponent(JSON.stringify(k)),
+          encodeURIComponent(JSON.stringify(payload[k]))
+        );
+      } else {
+        formData.append(k, payload[k]);
+      }
     }
     options.body = formData;
   }
-
-  let action = url.replace("http://duelquizz-php/api/user/", "");
 
   return fetch(url, options)
     .then((res) => res.json())
