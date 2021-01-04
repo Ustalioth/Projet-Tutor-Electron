@@ -19,14 +19,10 @@ form.addEventListener("submit", function (e) {
   let password = document.getElementById("password").value;
   let payload = { email: email, password: password };
 
-<<<<<<< HEAD
-  http("http://www.duelquizz.rf/api/user/login", "POST", payload, storeToken);
-=======
   http(
-    "http://duelquizz-php/api/user/login",
+    "http://www.duelquizz.rf/api/user/login",
     "POST",
     payload,
     storeToken
   ).catch((error) => (errorMessageDOM.innerHTML = "Identifiants invalides"));
->>>>>>> 5d916633858ba73476dd04672e44fa49e3db9226
 });

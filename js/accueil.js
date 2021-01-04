@@ -7,8 +7,6 @@ let bienvenue = document.getElementById("nom");
 let startSolo = document.getElementById("startSolo");
 let startDuo = document.getElementById("startDuo");
 
-let startDuo = document.getElementById("startDuo");
-
 let cancelButton = document.createElement("button");
 
 const disconnect = document.getElementById("disconnect");
@@ -110,17 +108,17 @@ startSolo.addEventListener("click", function () {
 
 startDuo.addEventListener("click", function () {
   http(
-    "http://duelquizz-php/api/user/themes",
+    "http://www.duelquizz.rf/api/user/themes",
     "GET",
     undefined,
     toLobbyDuo,
     token
   );
-  const ws = new WebSocket("ws://duelquizz:8080"); 
+  // const ws = new WebSocket("ws://duelquizz:8080"); 
 
-  ws.addEventListener("open", () => {
-    console.log("we are connected ! ");
-  });
+  // ws.addEventListener("open", () => {
+  //   console.log("we are connected ! ");
+  // });
 });
 
 function toLobbyDuo(data) {

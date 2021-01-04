@@ -42,7 +42,7 @@ form.addEventListener("submit", function (e) {
 
   if (readyToAdd(validPass(password.value, confirmPassword.value), noEmpty())) {
     http(
-      "http://duelquizz-php/api/user/register",
+      "http://www.duelquizz.rf/api/user/register",
       "POST",
       {
         firstName: firstName.value,

@@ -88,7 +88,7 @@ function nextQuestion(bypass = false) {
       document.body.innerHTML = `<div>Fin du quizz. Points : ${earnedPoints}/4</div><a href='./accueil.html'>Retour à l'accueil</a>`;
 
       http(
-        "http://duelquizz-php/api/user/updatePoints",
+        "http://www.duelquizz.rf/api/user/updatePoints",
         "PATCH",
         {
           points: earnedPoints,
