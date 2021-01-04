@@ -82,7 +82,7 @@ disconnect.addEventListener("click", function () {
   window.location = "../html/connexion.html";
 });
 
-startSolo.addEventListener("click", function (e) {
+startSolo.addEventListener("click", function () {
   if (document.getElementById("ThemeList") === null) {
     http(
       "http://duelquizz-php/api/user/themes",
@@ -106,6 +106,21 @@ startSolo.addEventListener("click", function (e) {
     );
   }
 });
+
+startDuo.addEventListener("click", function () {
+  http(
+    "http://duelquizz-php/api/user/themes",
+    "GET",
+    undefined,
+    toLobbyDuo,
+    token
+  );
+});
+
+function toLobbyDuo(data) {
+  sessionStorage.setItem("themes", JSON.stringify(data.themes));
+  window.location = "../html/lobbyDuo.html";
+}
 
 cancelButton.addEventListener("click", function () {
   startSolo.innerHTML = "Démarrer un quizz solo";

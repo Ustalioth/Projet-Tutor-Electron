@@ -20,14 +20,7 @@ function http(url, method, payload, callback, token) {
   if (payload && options.method !== "GET") {
     const formData = new FormData();
     for (let k in payload) {
-      if (action === "updatePoints") {
-        formData.append(
-          encodeURIComponent(JSON.stringify(k)),
-          encodeURIComponent(JSON.stringify(payload[k]))
-        );
-      } else {
-        formData.append(k, payload[k]);
-      }
+      formData.append(k, payload[k]);
     }
     options.body = formData;
   }
