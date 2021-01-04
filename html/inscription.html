@@ -13,19 +13,25 @@
     <link rel="stylesheet" href="../css/style.css" />
   </head>
   <body>
-    <h1>S'inscrire :</h1>
     <form id="inscriptionForm">
-      <input id="firstName" type="text" placeholder="FirstName" />
-      <input id="lastName" type="text" placeholder="LastName" />
-      <input id="email" type="email" placeholder="Email" />
-      <input id="password" type="password" placeholder="Password" />
-      <input
-        id="confirmPassword"
-        type="password"
-        placeholder="Confirm your password"
-      />
-
-      <button id="submitButton" type="submit">S'inscrire</button>
+      <div class="form-group inscription">
+        <input class="form-control" id="firstName" type="text" placeholder="FirstName" />
+        <br>
+        <input class="form-control" id="lastName" type="text" placeholder="LastName" />
+        <br>
+        <input class="form-control" id="email" type="email" placeholder="Email" />
+        <br>
+        <input class="form-control" id="password" type="password" placeholder="Password" />
+        <br>
+        <input
+          class="form-control" id="confirmPassword"
+          type="password"
+          placeholder="Confirm your password"
+        />
+        <div class="text-center">
+          <button class="btn subB" id="submitButton" type="submit">S'inscrire</button>
+         </div>
+      </div> 
     </form>
     <script type="module" src="../tools.js"></script>
     <script type="module" src="../js/inscription.js"></script>

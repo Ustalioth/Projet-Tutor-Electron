@@ -26,22 +26,27 @@
     <div class="container-fluid gray">
       <div class="container">
         <div class="row">
-          <h1>Se connecter</h1>
-          <form id="connectForm">
-            <input required id="email" type="email" placeholder="Email" />
-            <input
-              required
-              id="password"
-              type="password"
-              placeholder="Password"
-            />
-            <button id="submitButton" type="submit" class="btn btn-primary">
-              Valider
-            </button>
+          <h1 class="connexion">Connectez-vous : </h1>
+          <form class="connexionForm" id="connectForm">
+            <div class="form-group ">
+              <input class="form-control" required id="email" type="email" placeholder="Email" />
+              <br>
+              <input class="form-control"
+                required
+                id="password"
+                type="password"
+                placeholder="Password"
+              />
+                <button id="submitButton" type="submit" class="btn subB">
+                  Valider
+                </button>
+            </div>
           </form>
-          <div class="col-md-4">
-            Pas de compte ?<a href="./inscription.html" class="btn btn-primary"
-              >S'inscrire</a
+          <br>
+
+          <div class="registering">
+            Pas de compte ? <a href="./inscription.html"
+              >Inscrivez-vous</a
             >
           </div>
         </div>

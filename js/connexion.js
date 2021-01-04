@@ -18,5 +18,5 @@ form.addEventListener("submit", function (e) {
   let password = document.getElementById("password").value;
   let payload = { email: email, password: password };
 
-  http("http://duelquizz-php/api/user/login", "POST", payload, storeToken);
+  http("http://www.duelquizz.rf/api/user/login", "POST", payload, storeToken);
 });

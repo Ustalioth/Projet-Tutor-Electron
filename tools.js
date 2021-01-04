@@ -14,7 +14,7 @@ function http(url, method, payload, callback, token) {
     options.body = formData;
   }
 
-  let action = url.replace("http://duelquizz-php/api/user/", "");
+  let action = url.replace("http://www.duelquizz.rf/api/user/", "");
 
   return fetch(url, options)
     .then((res) => res.json())

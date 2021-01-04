@@ -1,16 +1,41 @@
-.gameZone {
-  background-color: lightgray;
-  padding: 10px;
-}
-
-.gray {
-  background-color: gray;
-}
-
-ul {
-  list-style:none;
-}
-
 .error{
   color:red;
+}
+
+.inscription{
+  width: 400px;
+  height: 150px;
+  margin-left: 540px;
+}
+
+.connexion{
+  margin-top: 100px;
+}
+
+#inscriptionForm{
+  margin-top: 100px ;
+}
+
+#connectForm{
+  margin-top: 210px ;
+  position: absolute;
+}
+
+.registering{
+  margin-top: 260px;
+}
+
+.connexionForm{
+  width: 800px;
+  position: absolute;
+}
+
+.subB{
+  margin-top: 50px;
+  background-color: #054A91;
+  color: #DBE4EE;
+}
+
+body{
+  background-color: #DBE4EE;
 }
