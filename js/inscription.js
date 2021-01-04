@@ -51,7 +51,7 @@ form.addEventListener("submit", function (e) {
         password: password.value,
       },
       redirect
-    ).catch((error) => (errorMessageDOM.innerHTML = "Identifiants invalides"));
+    ).catch((error) => (errorMessageDOM.innerHTML = error));
   }
 });
 
