@@ -20,7 +20,7 @@ form.addEventListener("submit", function (e) {
   let payload = { email: email, password: password };
 
   http(
-    "http://www.duelquizz.rf/api/user/login",
+    "http://duelquizz-php/api/user/login",
     "POST",
     payload,
     storeToken

@@ -15,29 +15,53 @@
   <body>
     <form id="inscriptionForm">
       <div class="form-group inscription">
-        <input class="form-control" id="firstName" type="text" placeholder="FirstName" />
-        <br>
-        <input class="form-control" id="lastName" type="text" placeholder="LastName" />
-        <br>
-        <input class="form-control" id="email" type="email" placeholder="Email" />
-        <br>
-        <input class="form-control" id="password" type="password" placeholder="Password" />
-        <br>
         <input
-          class="form-control" id="confirmPassword"
+          class="form-control"
+          id="firstName"
+          type="text"
+          placeholder="FirstName"
+        />
+        <br />
+        <input
+          class="form-control"
+          id="lastName"
+          type="text"
+          placeholder="LastName"
+        />
+        <br />
+        <input
+          class="form-control"
+          id="email"
+          type="email"
+          placeholder="Email"
+        />
+        <br />
+        <input
+          class="form-control"
+          id="password"
+          type="password"
+          placeholder="Password"
+        />
+        <br />
+        <input
+          class="form-control"
+          id="confirmPassword"
           type="password"
           placeholder="Confirm your password"
         />
         <div class="text-center">
-          <button class="btn subB" id="submitButton" type="submit">S'inscrire</button>
-         </div>
-      </div> 
+          <button class="btn subB" id="submitButton" type="submit">
+            S'inscrire
+          </button>
+          <a class="btn subB" href="../html/connexion.html">
+            Retour à la page de connexion
+          </a>
+        </div>
+      </div>
     </form>
     <p class="error" id="errorMessage"></p>
 
-    <a class="btn btn-secondary" href="../html/connexion.html"
-      >Retour à la page de connexion</a
-    >
+    
 
     <script type="module" src="../tools.js"></script>
     <script type="module" src="../js/inscription.js"></script>

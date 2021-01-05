@@ -1,6 +1,6 @@
 const WebSocket = require("ws");
 
-const wss = new WebSocket.Server({ host:'www.duelquizz.rf', port:8080 });
+const wss = new WebSocket.Server({ host:'duelquizz-php', port:8080 });
 
 wss.on("connection", ws=> {
     console.log("new client connected ! ");

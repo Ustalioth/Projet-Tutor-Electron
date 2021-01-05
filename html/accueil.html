@@ -22,27 +22,31 @@
     />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-  <body>
-    <h1>Accueil</h1>
-    <ul>
-      <li>Bienvenue <span id="nom"></span></li>
-      <li>Points : <span id="points"></span></li>
-      <li>Place dans le classement : <span id="place"></span></li>
-    </ul>
+  <body class="accueil text-center">
+    <a id="disconnect" class="btn subB">Se déconnecter</a>
+    <h1 id="bienvenueMessage">
+      Bienvenue
+      <span id="nom"></span>
+    </h1>
+    <div id="ghostId">
 
-    <ul id="buttons">
+    <ul>
       <li>
-        <button id="startSolo" class="btn btn-primary">
-          Démarrer un quizz solo
-        </button>
+        Vous avez acutellement <span id="points"></span> points.
       </li>
       <li>
-        <button id="startDuo" class="btn btn-primary">
-          Démarrer un quizz duo
-        </button>
+        Vous êtes donc : <span id="place"></span> participant(s)
       </li>
-      <li><a id="disconnect" class="btn btn-secondary">Se déconnecter</a></li>
     </ul>
+    </div>
+
+    <button id="startSolo" class="btn subB biggerB">
+      Démarrer un quizz solo
+    </button>
+
+    <button id="startDuo" class="btn subB biggerB">
+      Démarrer un quizz duo
+    </button>
 
     <!-- You can also require other files to run in this process -->
     <script type="module" src="../tools.js"></script>

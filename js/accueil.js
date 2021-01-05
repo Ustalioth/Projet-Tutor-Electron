@@ -3,19 +3,20 @@ import { http } from "../tools.js";
 let points = document.getElementById("points");
 let place = document.getElementById("place");
 let bienvenue = document.getElementById("nom");
+let bienvenueMessage = document.getElementById("bienvenueMessage");
 
 let startSolo = document.getElementById("startSolo");
 let startDuo = document.getElementById("startDuo");
 
 let cancelButton = document.createElement("button");
+let ghostId = document.getElementById("ghostId");
 
 const disconnect = document.getElementById("disconnect");
-const buttons = document.getElementById("buttons");
 
 const token = localStorage.getItem("token");
 
 http(
-  "http://www.duelquizz.rf/api/user/getUserData",
+  "http://duelquizz-php/api/user/getUserData",
   "GET",
   {
     // vérification de la validité du token
@@ -33,7 +34,7 @@ function storeUserData(result) {
     " " +
     sessionStorage.getItem("lastName");
   http(
-    "http://www.duelquizz.rf/api/user/getPosition/" + id,
+    "http://duelquizz-php/api/user/getPosition/" + id,
     "GET",
     undefined,
     displayPosition,
@@ -59,6 +60,8 @@ function fillSelectTheme(result) {
     let themes = result.themes;
     let selectThemes = document.createElement("select");
     selectThemes.id = "ThemeList";
+    selectThemes.classList.add("form-select");
+
     themes.forEach((theme) => {
       let themeOption = document.createElement("option");
       themeOption.text = theme.name;
@@ -66,7 +69,8 @@ function fillSelectTheme(result) {
       selectThemes.add(themeOption);
     });
     cancelButton.classList.add("btn");
-    cancelButton.classList.add("btn-secondary");
+    cancelButton.classList.add("subB");
+    cancelButton.classList.add("biggerB");
     cancelButton.innerHTML = "Annuler";
     startSolo.parentNode.insertBefore(selectThemes, startSolo.nextSibling);
     startSolo.parentNode.insertBefore(cancelButton, startSolo.nextSibling);
@@ -82,9 +86,13 @@ disconnect.addEventListener("click", function () {
 });
 
 startSolo.addEventListener("click", function () {
+  startDuo.style.display = "none";
+  bienvenueMessage.innerText = "Choisissez maintenant un thème : ";
+  ghostId.style.display = "none";
+  
   if (document.getElementById("ThemeList") === null) {
     http(
-      "http://www.duelquizz.rf/api/user/themes",
+      "http://duelquizz-php/api/user/themes",
       "GET",
       undefined,
       fillSelectTheme,
@@ -93,7 +101,7 @@ startSolo.addEventListener("click", function () {
   } else {
     let themeId = document.getElementById("ThemeList").value;
     http(
-      "http://www.duelquizz.rf/api/user/persistQuizz",
+      "http://duelquizz-php/api/user/persistQuizz",
       "POST",
       {
         mode: 0,
@@ -108,7 +116,7 @@ startSolo.addEventListener("click", function () {
 
 startDuo.addEventListener("click", function () {
   http(
-    "http://www.duelquizz.rf/api/user/themes",
+    "http://duelquizz-php/api/user/themes",
     "GET",
     undefined,
     toLobbyDuo,
@@ -128,8 +136,11 @@ function toLobbyDuo(data) {
 
 cancelButton.addEventListener("click", function () {
   startSolo.innerHTML = "Démarrer un quizz solo";
+  startDuo.style.display = "inline";
   document.getElementById("ThemeList").remove();
   cancelButton.remove();
+  bienvenueMessage.innerText = "Bienvenue   " + bienvenue.innerText;
+  ghostId.style.display = "block";
 });
 
 function startGame(data) {

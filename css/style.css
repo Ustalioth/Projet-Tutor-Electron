@@ -2,10 +2,25 @@
   color:red;
 }
 
+ul{
+  list-style: none;
+}
+
 .inscription{
   width: 400px;
   height: 150px;
   margin-left: 540px;
+}
+
+#ThemeList{
+  width: 50%;
+  position: absolute;
+  margin-top: -110px;
+  margin-left: 25%;
+}
+
+.line{
+  display: block;
 }
 
 .connexion{
@@ -37,5 +52,23 @@
 }
 
 body{
-  background-color: #DBE4EE;
+  background-color: #b1b7be;
+}
+
+.accueil{
+  margin-top: 70px;
+}
+
+#disconnect{
+  position: absolute;
+  margin-left: 40%;
+  margin-top: -60px;
+  background-color: #979da3;
+  color: black;
+}
+
+.biggerB{
+  margin-left: 20px;
+  width: 250px;
+  height: 50px;
 }
