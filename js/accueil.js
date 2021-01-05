@@ -22,11 +22,11 @@ http(
     // vérification de la validité du token
     token: token,
   },
-  storeUserData,
+  displayUserData,
   token
 );
 
-function storeUserData(result) {
+function displayUserData(result) {
   let id = sessionStorage.getItem("id");
   points.innerHTML = sessionStorage.getItem("points");
   bienvenue.innerHTML =
@@ -52,7 +52,14 @@ function displayPosition(result) {
     suffixe = "ème";
   }
 
-  place.innerHTML = `${result.position} ${suffixe} sur ${result.outOf}`;
+  place.innerHTML = `${result.position}${suffixe} sur ${result.outOf} joueurs`;
+  if (localStorage.getItem("lastScore") !== null) {
+    let lastScoreDOM = document.createElement("p");
+    let lastScore = localStorage.getItem("lastScore");
+    lastScoreDOM.innerHTML = `Score du dernier quizz : ${lastScore}/4`;
+    place.parentNode.insertBefore(lastScoreDOM, place.nextSibling);
+    //document.body.innerHTML = `<div></div><a href='./accueil.html'>Retour à l'accueil</a>`;
+  }
 }
 
 function fillSelectTheme(result) {
@@ -122,7 +129,7 @@ startDuo.addEventListener("click", function () {
     toLobbyDuo,
     token
   );
-  // const ws = new WebSocket("ws://duelquizz:8080"); 
+  // const ws = new WebSocket("ws://duelquizz:8080");
 
   // ws.addEventListener("open", () => {
   //   console.log("we are connected ! ");
