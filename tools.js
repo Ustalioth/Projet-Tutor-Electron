@@ -1,26 +1,21 @@
-export { http, formatDate };
+export { http };
 
 function http(url, method, payload, callback, token) {
-  let action = url.replace("http://www.duelquizz.rf/api/user/", "");
+  let action = url.replace("http://duelquizz-php/api/user/", "");
   let myHeaders = new Headers();
-
-  myHeaders.append("Authorization", token);
-  if (action === "updatePoints") {
-    myHeaders.append(
-      "Content-Type",
-      "application/x-www-form-urlencoded;charset=UTF-8"
-    );
-  }
 
   const options = {
     method: method ? method : "GET",
-    headers: myHeaders,
+    headers: { Authorization: token },
   };
 
-  if (payload && options.method !== "GET") {
+  if (payload && options.method != "GET") {
     const formData = new FormData();
     for (let k in payload) {
       formData.append(k, payload[k]);
+    }
+    for (var key of formData.entries()) {
+      //console.log(key[0] + ", " + key[1]);
     }
     options.body = formData;
   }
@@ -49,14 +44,14 @@ function http(url, method, payload, callback, token) {
 //   }
 // }
 
-function formatDate(date) {
-  var d = new Date(date),
-    month = "" + (d.getMonth() + 1),
-    day = "" + d.getDate(),
-    year = d.getFullYear();
+// function formatDate(date) {
+//   var d = new Date(date),
+//     month = "" + (d.getMonth() + 1),
+//     day = "" + d.getDate(),
+//     year = d.getFullYear();
 
-  if (month.length < 2) month = "0" + month;
-  if (day.length < 2) day = "0" + day;
+//   if (month.length < 2) month = "0" + month;
+//   if (day.length < 2) day = "0" + day;
 
-  return [year, month, day].join("-");
-}
+//   return [year, month, day].join("-");
+// }

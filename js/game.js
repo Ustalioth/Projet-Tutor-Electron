@@ -19,13 +19,14 @@ const errorMessageDOM = document.getElementById("errorMessage");
 
 const token = localStorage.getItem("token");
 
-localStorage.removeItem("questions");
 localStorage.removeItem("answers");
+
+allAnswers.forEach((element) => {
+  console.log(element);
+});
 
 for (let i = 1; i < 5; i++) {
   labels.push(document.getElementById(String(i)));
-
-  console.log(radioButtons);
 }
 
 displayQuestion();
@@ -85,19 +86,20 @@ function nextQuestion(bypass = false) {
         }
       });
 
-      document.body.innerHTML = `<div>Fin du quizz. Points : ${earnedPoints}/4</div><a href='./accueil.html'>Retour à l'accueil</a>`;
-
       http(
-        "http://www.duelquizz.rf/api/user/updatePoints",
+        "http://duelquizz-php/api/user/updatePoints?points=" + earnedPoints,
         "PATCH",
-        {
-          points: earnedPoints,
-        },
         undefined,
+        redirectToHome(earnedPoints),
         token
       );
     }
   }
+}
+
+function redirectToHome(earnedPoints) {
+  localStorage.setItem("lastScore", earnedPoints);
+  window.location = "../html/accueil.html";
 }
 
 function checkIfChecked(answered) {

@@ -8,6 +8,11 @@
   margin-left: 540px;
 }
 
+ul {
+  list-style:none;
+
+  }
+
 .connexion{
   margin-top: 100px;
 }

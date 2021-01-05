@@ -15,17 +15,17 @@ const buttons = document.getElementById("buttons");
 const token = localStorage.getItem("token");
 
 http(
-  "http://www.duelquizz.rf/api/user/getUserData",
+  "http://duelquizz-php/api/user/getUserData",
   "GET",
   {
     // vérification de la validité du token
     token: token,
   },
-  storeUserData,
+  displayUserData,
   token
 );
 
-function storeUserData(result) {
+function displayUserData(result) {
   let id = sessionStorage.getItem("id");
   points.innerHTML = sessionStorage.getItem("points");
   bienvenue.innerHTML =
@@ -33,7 +33,7 @@ function storeUserData(result) {
     " " +
     sessionStorage.getItem("lastName");
   http(
-    "http://www.duelquizz.rf/api/user/getPosition/" + id,
+    "http://duelquizz-php/api/user/getPosition/" + id,
     "GET",
     undefined,
     displayPosition,
@@ -51,7 +51,14 @@ function displayPosition(result) {
     suffixe = "ème";
   }
 
-  place.innerHTML = `${result.position} ${suffixe} sur ${result.outOf}`;
+  place.innerHTML = `${result.position}${suffixe} sur ${result.outOf} joueurs`;
+  if (localStorage.getItem("lastScore") !== null) {
+    let lastScoreDOM = document.createElement("p");
+    let lastScore = localStorage.getItem("lastScore");
+    lastScoreDOM.innerHTML = `Score du dernier quizz : ${lastScore}/4`;
+    place.parentNode.insertBefore(lastScoreDOM, place.nextSibling);
+    //document.body.innerHTML = `<div></div><a href='./accueil.html'>Retour à l'accueil</a>`;
+  }
 }
 
 function fillSelectTheme(result) {
@@ -84,7 +91,7 @@ disconnect.addEventListener("click", function () {
 startSolo.addEventListener("click", function () {
   if (document.getElementById("ThemeList") === null) {
     http(
-      "http://www.duelquizz.rf/api/user/themes",
+      "http://duelquizz-php/api/user/themes",
       "GET",
       undefined,
       fillSelectTheme,
@@ -93,7 +100,7 @@ startSolo.addEventListener("click", function () {
   } else {
     let themeId = document.getElementById("ThemeList").value;
     http(
-      "http://www.duelquizz.rf/api/user/persistQuizz",
+      "http://duelquizz-php/api/user/persistQuizz",
       "POST",
       {
         mode: 0,
@@ -108,13 +115,13 @@ startSolo.addEventListener("click", function () {
 
 startDuo.addEventListener("click", function () {
   http(
-    "http://www.duelquizz.rf/api/user/themes",
+    "http://duelquizz-php/api/user/themes",
     "GET",
     undefined,
     toLobbyDuo,
     token
   );
-  // const ws = new WebSocket("ws://duelquizz:8080"); 
+  // const ws = new WebSocket("ws://duelquizz:8080");
 
   // ws.addEventListener("open", () => {
   //   console.log("we are connected ! ");
