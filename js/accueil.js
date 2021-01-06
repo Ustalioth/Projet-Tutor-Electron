@@ -79,7 +79,7 @@ function fillSelectTheme(result) {
     cancelButton.classList.add("subB");
     cancelButton.classList.add("biggerB");
     cancelButton.innerHTML = "Annuler";
-    startSolo.parentNode.insertBefore(selectThemes, startSolo.nextSibling);
+    startSolo.parentNode.insertBefore(selectThemes, startSolo);
     startSolo.parentNode.insertBefore(cancelButton, startSolo.nextSibling);
     //startSolo.nextSibling(selectThemes);
 
@@ -129,16 +129,13 @@ startDuo.addEventListener("click", function () {
     toLobbyDuo,
     token
   );
-  // const ws = new WebSocket("ws://duelquizz:8080");
-
-  // ws.addEventListener("open", () => {
-  //   console.log("we are connected ! ");
-  // });
+  
 });
 
 function toLobbyDuo(data) {
   sessionStorage.setItem("themes", JSON.stringify(data.themes));
   window.location = "../html/lobbyDuo.html";
+  selectThemes.classList.add("form-select");
 }
 
 cancelButton.addEventListener("click", function () {
