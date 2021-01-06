@@ -65,8 +65,7 @@ function fillSelectTheme(result) {
   if (document.getElementById("ThemeList") === null) {
     let themes = result.themes;
 
-    console.log(themes);
-    let selectThemes = document.createElement("select").themes;
+    let selectThemes = document.createElement("select");
     selectThemes.id = "ThemeList";
     selectThemes.classList.add("form-select");
 
@@ -130,14 +129,12 @@ startDuo.addEventListener("click", function () {
     toLobbyDuo,
     token
   );
-  
 });
 
 function toLobbyDuo(data) {
   console.log(data);
   localStorage.setItem("themes", JSON.stringify(data));
   window.location = "../html/lobbyDuo.html";
-  selectThemes.classList.add("form-select");
 }
 
 cancelButton.addEventListener("click", function () {
