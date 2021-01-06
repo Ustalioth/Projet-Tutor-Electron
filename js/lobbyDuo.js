@@ -4,11 +4,21 @@ console.log(JSON.parse(sessionStorage.getItem("themes")));
 
 const themes = JSON.parse(sessionStorage.getItem("themes"));
 let spanPoints = document.getElementById("points");
+let waitingMessage = document.getElementById("waitingMessage");
+
 let nbrPoints = 0;
 
+// var conn = new WebSocket("ws://duelquizz-php:8080"); //connexion au serveur websockets
+// conn.onopen = function (e) {
+//   console.log("Connection established!");
+//   conn.send(localStorage.getItem("userid"));
+// };
+
 if (document.getElementById("ThemeList") === null) {
+  let themes = JSON.parse(localStorage.getItem("themes")).themes;
+  console.log(themes);
+  //localStorage.removeItem("themes");
   let selectThemes = document.createElement("select");
-  let body = document.body;
   selectThemes.id = "ThemeList";
   themes.forEach((theme) => {
     let themeOption = document.createElement("option");
@@ -16,7 +26,10 @@ if (document.getElementById("ThemeList") === null) {
     themeOption.value = theme.id;
     selectThemes.add(themeOption);
   });
-  body.appendChild(selectThemes);
+  waitingMessage.parentNode.insertBefore(
+    selectThemes,
+    waitingMessage.nextSibling
+  );
 }
 
 setInterval(function () {

@@ -58,7 +58,6 @@ function displayPosition(result) {
     let lastScore = localStorage.getItem("lastScore");
     lastScoreDOM.innerHTML = `Score du dernier quizz : ${lastScore}/4`;
     place.parentNode.insertBefore(lastScoreDOM, place.nextSibling);
-    //document.body.innerHTML = `<div></div><a href='./accueil.html'>Retour à l'accueil</a>`;
   }
 }
 
@@ -82,13 +81,13 @@ function fillSelectTheme(result) {
     startSolo.parentNode.insertBefore(selectThemes, startSolo);
     startSolo.parentNode.insertBefore(cancelButton, startSolo.nextSibling);
     //startSolo.nextSibling(selectThemes);
-
     startSolo.innerHTML = "Valider";
   }
 }
 
 disconnect.addEventListener("click", function () {
   localStorage.removeItem("token");
+  localStorage.removeItem("lastScore");
   window.location = "../html/connexion.html";
 });
 
@@ -96,7 +95,7 @@ startSolo.addEventListener("click", function () {
   startDuo.style.display = "none";
   bienvenueMessage.innerText = "Choisissez maintenant un thème : ";
   ghostId.style.display = "none";
-  
+
   if (document.getElementById("ThemeList") === null) {
     http(
       "http://duelquizz-php/api/user/themes",
@@ -133,7 +132,8 @@ startDuo.addEventListener("click", function () {
 });
 
 function toLobbyDuo(data) {
-  sessionStorage.setItem("themes", JSON.stringify(data.themes));
+  console.log(data);
+  localStorage.setItem("themes", JSON.stringify(data));
   window.location = "../html/lobbyDuo.html";
   selectThemes.classList.add("form-select");
 }
