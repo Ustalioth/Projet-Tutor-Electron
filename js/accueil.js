@@ -66,7 +66,7 @@ function fillSelectTheme(result) {
     let themes = result.themes;
 
     console.log(themes);
-    let selectThemes = document.createElement("select").themes;
+    let selectThemes = document.createElement("select");
     selectThemes.id = "ThemeList";
     selectThemes.classList.add("form-select");
 
