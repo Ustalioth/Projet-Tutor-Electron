@@ -64,7 +64,9 @@ function displayPosition(result) {
 function fillSelectTheme(result) {
   if (document.getElementById("ThemeList") === null) {
     let themes = result.themes;
-    let selectThemes = document.createElement("select");
+
+    console.log(themes);
+    let selectThemes = document.createElement("select").themes;
     selectThemes.id = "ThemeList";
     selectThemes.classList.add("form-select");
 
