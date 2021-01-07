@@ -197,6 +197,7 @@ if (document.getElementById("ThemeList") === null) {
     selectThemes,
     waitingMessage.nextSibling
   );
+    selectThemes.classList.add("form-select")
 }
 
 setInterval(function () {
