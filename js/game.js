@@ -1,7 +1,5 @@
 import { http } from "../tools.js";
 
-export { displayQuestion, checkIfChecked, getAnswer, getCorrectAnswers };
-
 let leftTime = 10;
 let index = 0;
 
@@ -30,13 +28,12 @@ localStorage.removeItem("answers");
 displayQuestion();
 
 function displayQuestion() {
+  labels = [];
   for (let i = 1; i < 5; i++) {
     labels.push(document.getElementById(String(i)));
   }
   questionDOM.innerHTML = questions[index].label;
   labels.forEach((label, indexForeach) => {
-    console.log(indexForeach);
-
     label.innerHTML = allAnswers[index][indexForeach].label;
   });
   radioButtons.forEach((radioButton, indexForeach) => {
@@ -73,7 +70,6 @@ function nextQuestion(bypass = false) {
       index++;
       indexDOM.innerHTML = index + 1;
       clearAllRadios();
-      labels = [];
       displayQuestion();
       leftTime = 10;
       questionDOM.innerHTML = questions[index].label;

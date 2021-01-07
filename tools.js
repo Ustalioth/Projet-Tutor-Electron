@@ -28,30 +28,3 @@ function http(url, method, payload, callback, token) {
       } else console.log(data);
     });
 }
-
-// function throwError(action, error) {
-//   switch (action) {
-//     case "checktoken":
-//       window.location = "../html/connexion.html";
-//       console.log("Token invalide, veuillez vous reconnecter");
-//       return;
-//     case "login":
-//       console.log("Identifiant(s) incorrect(s)");
-//       break;
-//     default:
-//       console.log("error : " + error);
-//       break;
-//   }
-// }
-
-// function formatDate(date) {
-//   var d = new Date(date),
-//     month = "" + (d.getMonth() + 1),
-//     day = "" + d.getDate(),
-//     year = d.getFullYear();
-
-//   if (month.length < 2) month = "0" + month;
-//   if (day.length < 2) day = "0" + day;
-
-//   return [year, month, day].join("-");
-// }

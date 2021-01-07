@@ -56,7 +56,7 @@ function displayPosition(result) {
   if (localStorage.getItem("lastScore") !== null) {
     let lastScoreDOM = document.createElement("p");
     let lastScore = localStorage.getItem("lastScore");
-    lastScoreDOM.innerHTML = `Score du dernier quizz : ${lastScore}/4`;
+    lastScoreDOM.innerHTML = `Score du dernier quizz solo : ${lastScore}/4`;
     place.parentNode.insertBefore(lastScoreDOM, place.nextSibling);
   }
 }
@@ -132,7 +132,6 @@ startDuo.addEventListener("click", function () {
 });
 
 function toLobbyDuo(data) {
-  console.log(data);
   localStorage.setItem("themes", JSON.stringify(data));
   window.location = "../html/lobbyDuo.html";
 }
@@ -151,21 +150,3 @@ function startGame(data) {
   localStorage.setItem("answers", JSON.stringify(data.possibleanswers));
   window.location.href = "../html/game.html";
 }
-
-// function selectQuestionAndStart(result) {
-//   let questions = result.questions;
-//   let selectedQuestions = [];
-//   let index = Math.floor(Math.random() * questions.length);
-//   let selectedIndex = [];
-//   for (let i = 0; i < 4; i++) {
-//     while (selectedIndex.includes(index)) {
-//       //On vérifie que la question n'a pas été sélectionnée auparavent
-//       index = Math.floor(Math.random() * questions.length);
-//     }
-//     selectedIndex.push(index);
-
-//     selectedQuestions.push(
-//       questions[index] // on sélectionne une question parmis les questions qui correspondent au thème
-//     );
-//   }
-// }

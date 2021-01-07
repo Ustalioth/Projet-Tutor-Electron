@@ -1,21 +1,30 @@
 import { http } from "../tools.js";
-import {
-  displayQuestion,
-  checkIfChecked,
-  getAnswer,
-  getCorrectAnswers,
-} from "./game.js";
 
 let leftTime = 10;
 let index = 0;
+let answeredCorrectly = 0;
+
+let end = false;
+let user1points;
+let clock;
+
+var questions;
+var allAnswers;
 
 let indexDOM = document.getElementById("index");
 let questionDOM = document.getElementById("Question");
 let timeDOM = document.getElementById("time");
 let labels = [];
+let answeredArray = []; //Array qui contient toutes les réponses du joueur
 
 const GameDOM = document.getElementById("play");
 const StandbyDOM = document.getElementById("standby");
+const LobbyDOM = document.getElementById("lobby");
+const EndDOM = document.getElementById("end");
+const EndDOMmessage = document.getElementById("endMessage");
+
+const errorMessageDOM = document.getElementById("errorMessage");
+
 const radioButtons = document.getElementsByName("answer");
 
 const themes = JSON.parse(sessionStorage.getItem("themes"));
@@ -41,7 +50,6 @@ try {
   socket.onmessage = function (response) {
     let message = JSON.parse(response.data);
     let type = message["type"];
-    //console.log(type);
 
     let themeId = document.getElementById("ThemeList").value;
 
@@ -75,8 +83,18 @@ try {
           token
         );
         break;
-      case "no_player":
-        console.log("no player");
+      case "next":
+        console.log("next");
+        if (message["end"] !== undefined) {
+          end = true;
+          user1points = message["user1points"];
+        }
+        nextQuestion();
+
+        break;
+      case "informUser1":
+        let result = message["result"];
+        informUser1(result);
         break;
     }
   };
@@ -90,81 +108,128 @@ try {
 
 document.getElementById("answers").addEventListener("submit", function (e) {
   e.preventDefault();
-  nextQuestion(false);
+  passTurn(false);
 });
 
-function nextQuestion(bypass = false) {
+function informUser1(result) {
+  let dbPoints;
+
+  switch (result) {
+    case "won":
+      EndDOMmessage.innerHTML = `Vous avez perdu et marqué 0 points, votre score : ${answeredCorrectly}/4`;
+      dbPoints = 0;
+      break;
+    case "tie":
+      EndDOMmessage.innerHTML = `Il y a égalité, vous avez marqué 5 points, votre score : ${answeredCorrectly}/4`;
+      dbPoints = 5;
+      break;
+    case "lost":
+      EndDOMmessage.innerHTML = `Bravo, vous avez gagné et marqué 10 points ! Votre score : ${answeredCorrectly}/4`;
+      dbPoints = 10;
+      break;
+  }
+
+  updatePointsInDb(dbPoints);
+}
+
+function nextQuestion(params) {
+  StandbyDOM.style.display = "none";
+  LobbyDOM.style.display = "none";
+  GameDOM.style.display = "block";
+
+  leftTime = 10;
+  questionDOM.innerHTML = questions[index].label;
+  if (errorMessageDOM.innerHTML !== "") {
+    errorMessageDOM.innerHTML = "";
+  }
+
+  displayQuestion();
+}
+
+function passTurn(bypass = false) {
   // Bypass sert à ne pas vérifier le fait qu'une réponse ai été sélectionnée si le timer atteint 0
   if (index <= 3) {
     let answered = getAnswer();
     if (bypass === true) {
       answeredArray.push(answered);
-      socket.send(JSON.stringify({ type: "passTurn" }));
     } else {
       let checked = checkIfChecked(answered); //checked prend false si aucun bouton n'est coché ou la value du bouton coché
 
       if (checked !== false) {
         answeredArray.push(answered);
-        socket.send(JSON.stringify({ type: "passTurn" }));
       } else {
         return;
       }
     }
     StandbyDOM.style.display = "block";
     GameDOM.style.display = "none";
-    // http(
-    //   "http://duelquizz-php/api/user/updatePoints?points=" + earnedPoints,
-    //   "PATCH",
-    //   undefined,
-    //   redirectToHome(earnedPoints),
-    //   token
-    // );
-  }
-}
+    LobbyDOM.style.display = "none";
 
-function myTurn() {
-  if (index !== 3) {
     //Pas besoin de faire tout ça si il s'agit de la dernière question
-    index++;
-    indexDOM.innerHTML = index + 1;
-    clearAllRadios();
-    //displayQuestion();
-    leftTime = 10;
-    questionDOM.innerHTML = questions[index].label;
-    if (errorMessageDOM.innerHTML !== "") {
-      errorMessageDOM.innerHTML = "";
-    }
-  } else {
-    clearInterval(clock);
-    let correctIds = getCorrectAnswers(); //Array qui contient l'id de la bonne réponse de chaque question
+    if (index !== 3) {
+      index++;
+      indexDOM.innerHTML = index + 1;
+      clearAllRadios();
+      socket.send(JSON.stringify({ type: "passTurn" }));
+    } else {
+      let correctIds = getCorrectAnswers(); //Array qui contient l'id de la bonne réponse de chaque question
 
-    answeredArray.forEach((answered, index) => {
-      if (answered === correctIds[index]) {
-        earnedPoints++;
+      answeredArray.forEach((answered, index) => {
+        if (answered === correctIds[index]) {
+          answeredCorrectly++;
+        }
+      });
+
+      if (end === true) {
+        clearInterval(clock);
+
+        let result = getResultAndUpdatePoints(answeredCorrectly);
+
+        socket.send(
+          JSON.stringify({
+            type: "informUser1",
+            result: result,
+          })
+        );
+      } else {
+        //dernière question du premier joueur, le deuxième doit encore répondre
+        clearInterval(clock);
+
+        socket.send(
+          JSON.stringify({
+            type: "passTurn",
+            last: "true",
+            points: answeredCorrectly,
+          })
+        );
       }
-    });
 
-    redirectToHome(earnedPoints);
+      StandbyDOM.style.display = "none";
+      GameDOM.style.display = "none";
+      LobbyDOM.style.display = "none";
+      EndDOM.style.display = "block";
+    }
   }
 }
 
 function handleSecondPlayer(data) {
-  console.log(data);
+  LobbyDOM.style.display = "none";
+  StandbyDOM.style.display = "none";
   GameDOM.style.display = "block";
 
-  const questions = data.questions;
-  const allAnswers = data.possibleanswers;
+  questions = data.questions;
+  allAnswers = data.possibleanswers;
 
-  setInterval(function () {
+  clock = setInterval(function () {
     if (leftTime != 0) {
       leftTime = leftTime - 1;
       timeDOM.innerHTML = leftTime;
     } else {
-      nextQuestion(true);
+      passTurn(true);
     }
   }, 1000);
 
-  //displayQuestion();
+  displayQuestion();
 
   socket.send(
     JSON.stringify({
@@ -177,9 +242,34 @@ function handleSecondPlayer(data) {
 
 function storeQuestionsAndAnswers(data) {
   StandbyDOM.style.display = "block";
+  GameDOM.style.display = "none";
+  LobbyDOM.style.display = "none";
 
   questions = data.questions;
-  answers = data.possibleanswers;
+  allAnswers = data.possibleanswers;
+}
+
+function getResultAndUpdatePoints(answeredCorrectly) {
+  let result;
+  let dbPoints;
+
+  if (answeredCorrectly < user1points) {
+    EndDOMmessage.innerHTML = `Vous avez perdu et marqué 0 points, votre score : ${answeredCorrectly}/4`;
+    dbPoints = 0;
+    result = "lost";
+  } else if (answeredCorrectly === user1points) {
+    EndDOMmessage.innerHTML = `Il y a égalité, vous avez marqué 5 points, votre score : ${answeredCorrectly}/4`;
+    dbPoints = 5;
+    result = "tie";
+  } else {
+    EndDOMmessage.innerHTML = `Bravo, vous avez gagné et marqué 10 points ! Votre score : ${answeredCorrectly}/4`;
+    dbPoints = 10;
+    result = "won";
+  }
+
+  updatePointsInDb(dbPoints);
+
+  return result;
 }
 
 if (document.getElementById("ThemeList") === null) {
@@ -197,7 +287,17 @@ if (document.getElementById("ThemeList") === null) {
     selectThemes,
     waitingMessage.nextSibling
   );
-    selectThemes.classList.add("form-select")
+  selectThemes.classList.add("form-select");
+}
+
+function updatePointsInDb(dbPoints) {
+  http(
+    "http://duelquizz-php/api/user/updatePoints?points=" + dbPoints,
+    "PATCH",
+    undefined,
+    undefined,
+    token
+  );
 }
 
 setInterval(function () {
@@ -220,3 +320,58 @@ setInterval(function () {
       break;
   }
 }, 1000);
+
+//fonction que je n'ai pas réussi à importer depuis games.js
+function displayQuestion() {
+  labels = [];
+  for (let i = 1; i < 5; i++) {
+    labels.push(document.getElementById(String(i)));
+  }
+  questionDOM.innerHTML = questions[index].label;
+  labels.forEach((label, indexForeach) => {
+    label.innerHTML = allAnswers[index][indexForeach].label;
+  });
+  radioButtons.forEach((radioButton, indexForeach) => {
+    radioButton.value = allAnswers[index][indexForeach].id;
+  });
+}
+
+function checkIfChecked(answered) {
+  if (answered === undefined) {
+    errorMessageDOM.innerHTML = "Veuillez sélectionner une réponse";
+    return false;
+  }
+}
+
+function getAnswer() {
+  let answered;
+  for (let i = 0; i < radioButtons.length; i++) {
+    if (radioButtons[i].checked) {
+      answered = radioButtons[i].value;
+      return answered;
+    }
+  }
+}
+
+function getCorrectAnswers() {
+  let correctIds = [];
+
+  allAnswers.forEach((answersToOneQuestion) => {
+    //Foreach sur l'array qui contient toutes les réponses à toutes les questions
+
+    answersToOneQuestion.forEach((answer) => {
+      //Foreach sur l'array qui contient les réponses d'une question
+      if (Number(answer.correct) === 1) {
+        correctIds.push(answer.id);
+      }
+    });
+  });
+  return correctIds;
+}
+
+function clearAllRadios() {
+  for (var i = 0; i < radioButtons.length; i++) {
+    if (radioButtons[i].checked)
+      document.getElementById(radioButtons[i].id).checked = false;
+  }
+}
