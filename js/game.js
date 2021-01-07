@@ -35,6 +35,8 @@ function displayQuestion() {
   }
   questionDOM.innerHTML = questions[index].label;
   labels.forEach((label, indexForeach) => {
+    console.log(indexForeach);
+
     label.innerHTML = allAnswers[index][indexForeach].label;
   });
   radioButtons.forEach((radioButton, indexForeach) => {
@@ -71,6 +73,7 @@ function nextQuestion(bypass = false) {
       index++;
       indexDOM.innerHTML = index + 1;
       clearAllRadios();
+      labels = [];
       displayQuestion();
       leftTime = 10;
       questionDOM.innerHTML = questions[index].label;
