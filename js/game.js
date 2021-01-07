@@ -1,5 +1,7 @@
 import { http } from "../tools.js";
 
+export { displayQuestion, checkIfChecked, getAnswer, getCorrectAnswers };
+
 let leftTime = 10;
 let index = 0;
 
@@ -21,17 +23,16 @@ const token = localStorage.getItem("token");
 
 localStorage.removeItem("answers");
 
-allAnswers.forEach((element) => {
-  console.log(element);
-});
-
-for (let i = 1; i < 5; i++) {
-  labels.push(document.getElementById(String(i)));
-}
+// allAnswers.forEach((element) => {
+//   console.log(element);
+// });
 
 displayQuestion();
 
 function displayQuestion() {
+  for (let i = 1; i < 5; i++) {
+    labels.push(document.getElementById(String(i)));
+  }
   questionDOM.innerHTML = questions[index].label;
   labels.forEach((label, indexForeach) => {
     label.innerHTML = allAnswers[index][indexForeach].label;
@@ -41,7 +42,7 @@ function displayQuestion() {
   });
 }
 
-let clock = setInterval(function () {
+setInterval(function () {
   if (leftTime != 0) {
     leftTime = leftTime - 1;
     timeDOM.innerHTML = leftTime;
@@ -77,7 +78,6 @@ function nextQuestion(bypass = false) {
         errorMessageDOM.innerHTML = "";
       }
     } else {
-      clearInterval(clock);
       let correctIds = getCorrectAnswers(); //Array qui contient l'id de la bonne réponse de chaque question
 
       answeredArray.forEach((answered, index) => {
@@ -86,13 +86,15 @@ function nextQuestion(bypass = false) {
         }
       });
 
-      http(
-        "http://duelquizz-php/api/user/updatePoints?points=" + earnedPoints,
-        "PATCH",
-        undefined,
-        redirectToHome(earnedPoints),
-        token
-      );
+      redirectToHome(earnedPoints);
+
+      // http(
+      //   "http://duelquizz-php/api/user/updatePoints?points=" + earnedPoints,
+      //   "PATCH",
+      //   undefined,
+      //   redirectToHome(earnedPoints),
+      //   token
+      // );
     }
   }
 }

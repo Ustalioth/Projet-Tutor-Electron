@@ -31,8 +31,41 @@
     </p>
 
     <a href="accueil.html" class="btn subB">Accueil</a>
+
+    <div class="container-fluid gray" id="play" style="display: none">
+      <div class="container gameZone">
+        <h1 id="Question"></h1>
+        <form id="answers">
+          <ul>
+            <li>
+              <input type="radio" name="answer" id="1radio" />
+              <label id="1" for="1radio"></label>
+            </li>
+            <li>
+              <input type="radio" name="answer" id="2radio" />
+              <label id="2" for="2radio"></label>
+            </li>
+            <li>
+              <input type="radio" name="answer" id="3radio" />
+              <label id="3" for="3radio"></label>
+            </li>
+            <li>
+              <input type="radio" name="answer" id="4radio" />
+              <label id="4" for="4radio"></label>
+            </li>
+          </ul>
+          <input type="submit" value="Répondre" />
+        </form>
+
+        <p>Temps restant : <span id="time">10</span> secondes</p>
+        <p>Question <span id="index">1</span>/4</p>
+        <p class="error" id="errorMessage"></p>
+      </div>
+    </div>
+    <div id="standby" style="display: none">
+      Veuillez attendre que votre adversaire réponde...
+    </div>
     <!-- You can also require other files to run in this process -->
-    <script type="module" src="../tools.js"></script>
     <script type="module" src="../js/lobbyDuo.js"></script>
   </body>
 </html>

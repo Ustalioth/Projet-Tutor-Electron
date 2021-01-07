@@ -27,8 +27,8 @@ http(
 );
 
 function displayUserData(result) {
-  let id = sessionStorage.getItem("id");
-  points.innerHTML = sessionStorage.getItem("points");
+  let id = localStorage.getItem("id");
+  points.innerHTML = localStorage.getItem("points");
   bienvenue.innerHTML =
     sessionStorage.getItem("firstName") +
     " " +
@@ -112,7 +112,7 @@ startSolo.addEventListener("click", function () {
       "POST",
       {
         mode: 0,
-        user1: JSON.parse(localStorage.getItem("userid")),
+        user1: JSON.parse(localStorage.getItem("id")),
         themeId: themeId,
       },
       startGame,

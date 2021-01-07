@@ -26,28 +26,33 @@
     <div class="container-fluid gray">
       <div class="container">
         <div class="row">
-          <h1 class="connexion">Connectez-vous : </h1>
+          <h1 class="connexion">Connectez-vous :</h1>
           <form class="connexionForm" id="connectForm">
-            <div class="form-group ">
-              <input class="form-control" required id="email" type="email" placeholder="Email" />
-              <br>
-              <input class="form-control"
+            <div class="form-group">
+              <input
+                class="form-control"
+                required
+                id="email"
+                type="email"
+                placeholder="Email"
+              />
+              <br />
+              <input
+                class="form-control"
                 required
                 id="password"
                 type="password"
                 placeholder="Password"
               />
-                <button id="submitButton" type="submit" class="btn subB">
-                  Valider
-                </button>
+              <button id="submitButton" type="submit" class="btn subB">
+                Valider
+              </button>
             </div>
           </form>
-          <br>
+          <br />
 
           <div class="registering">
-            Pas de compte ? <a href="./inscription.html"
-              >Inscrivez-vous</a
-            >
+            Pas de compte ? <a href="./inscription.html">Inscrivez-vous</a>
           </div>
           <p class="error" id="errorMessage"></p>
         </div>
@@ -55,7 +60,6 @@
     </div>
 
     <!-- You can also require other files to run in this process -->
-    <script type="module" src="../tools.js"></script>
     <script type="module" src="../js/connexion.js"></script>
   </body>
 </html>

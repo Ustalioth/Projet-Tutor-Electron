@@ -20,30 +20,13 @@
       integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
       crossorigin="anonymous"
     />
+
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-  <body class="accueil text-center">
-    <a id="disconnect" class="btn subB">Se déconnecter</a>
-    <h1 id="bienvenueMessage">
-      Bienvenue
-      <span id="nom"></span>
-    </h1>
-    <div id="ghostId">
-      <ul>
-        <li>Vous avez acutellement <span id="points"></span> points.</li>
-        <li>Vous êtes donc : <span id="place"></span></li>
-      </ul>
-    </div>
-
-    <button id="startSolo" class="btn subB biggerB">
-      Démarrer un quizz solo
-    </button>
-
-    <button id="startDuo" class="btn subB biggerB">
-      Démarrer un quizz duo
-    </button>
+  <body>
+    {# <iframe href="gameDuo.html"></iframe> #}
 
     <!-- You can also require other files to run in this process -->
-    <script type="module" src="../js/accueil.js"></script>
+    <script type="module" src="../js/gameDuo.js"></script>
   </body>
 </html>

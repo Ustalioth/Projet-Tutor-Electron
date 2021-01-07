@@ -5,7 +5,7 @@ const errorMessageDOM = document.getElementById("errorMessage");
 
 function storeToken(result) {
   localStorage.setItem("token", result.token);
-  sessionStorage.setItem("id", result.id);
+  localStorage.setItem("id", result.id);
   sessionStorage.setItem("points", result.points);
   sessionStorage.setItem("firstName", result.firstName);
   sessionStorage.setItem("lastName", result.lastName);
