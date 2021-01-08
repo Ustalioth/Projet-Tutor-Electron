@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "jquery": "^3.5.1",
+    "simple-peer": "^9.9.3",
     "ws": "^7.4.2"
   }
 }

@@ -68,6 +68,8 @@ try {
           token
         );
         break;
+      case "stream":
+        console.log('streaming')
       case "need_to_wait":
         console.log("need to wait");
         http(
@@ -417,3 +419,32 @@ function clearAllRadios() {
       document.getElementById(radioButtons[i].id).checked = false;
   }
 }
+
+//Système de visio
+
+const videoGrid = document.getElementById("video-grid")
+const myVideo = document.createElement('video')
+myVideo.muted = true
+
+navigator.mediaDevices.getUserMedia({
+  video: true,
+  audio: true,
+}).then(stream => {
+  addVideoStream(myVideo, stream)
+
+  socket.send(
+    JSON.stringify({
+      type: "informUser1",
+      result: stream,
+    })
+  );
+})
+
+function addVideoStream(video, stream){
+  video.srcObject = stream
+  video.addEventListener('loadedmetadata', () => {
+    video.play();
+  })
+  videoGrid.append(video)
+}
+
