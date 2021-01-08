@@ -49,6 +49,7 @@ try {
   socket.onmessage = function (response) {
     let message = JSON.parse(response.data);
     let type = message["type"];
+    console.log(type);
 
     let themeId = document.getElementById("ThemeList").value;
 
@@ -65,15 +66,10 @@ try {
           },
           handleSecondPlayer,
           token
-        ).then((data) => {
-          //localStorage.setItem("socket", JSON.stringify(dataBase));
-          console.log(socket);
-          //window.location = "../html/gameDuo.html";
-        });
+        );
         break;
       case "need_to_wait":
         console.log("need to wait");
-
         http(
           `http://duelquizz-php/api/user/playerTwoQuizz?idQuizz=${message.idQuizz}&user2=${userid}`,
           "PATCH",
@@ -96,8 +92,10 @@ try {
         informUser1(result);
         break;
       case "disconnected":
-        console.log("disconnected");
         opponentDisconected();
+        break;
+      case "with_yourself":
+        cantPlayWithYourSelf();
         break;
     }
   };
@@ -273,13 +271,24 @@ function storeQuestionsAndAnswers(data) {
 }
 
 function opponentDisconected() {
+  if (end === false) {
+    StandbyDOM.style.display = "none";
+    GameDOM.style.display = "none";
+    LobbyDOM.style.display = "none";
+    EndDOM.style.display = "block";
+    EndDOM.innerHTML =
+      "Votre adversaire s'est déconnecté, vous gagnez 10 points par abandon !";
+    updatePointsInDb(10);
+  }
+}
+
+function cantPlayWithYourSelf() {
   StandbyDOM.style.display = "none";
   GameDOM.style.display = "none";
   LobbyDOM.style.display = "none";
   EndDOM.style.display = "block";
-  EndDOM.innerHTML =
-    "Votre adversaire s'est déconnecté, vous gagnez 10 points par abandon !";
-  updatePointsInDb(10);
+  EndDOMmessage.innerHTML = "Vous ne pouvez pas jouer avec vous même !";
+  return;
 }
 
 function getResultAndUpdatePoints(answeredCorrectly) {
