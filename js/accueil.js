@@ -1,5 +1,7 @@
 import { http } from "../tools.js";
 
+const domainName = "duelquizz-php";
+
 let points = document.getElementById("points");
 let place = document.getElementById("place");
 let bienvenue = document.getElementById("nom");
@@ -16,7 +18,7 @@ const disconnect = document.getElementById("disconnect");
 const token = localStorage.getItem("token");
 
 http(
-  "http://duelquizz-php/api/user/getUserData",
+  `http://${domainName}/api/user/getUserData`,
   "GET",
   {
     // vérification de la validité du token
@@ -34,7 +36,7 @@ function displayUserData(result) {
     " " +
     sessionStorage.getItem("lastName");
   http(
-    "http://duelquizz-php/api/user/getPosition/" + id,
+    `http://${domainName}/api/user/getPosition/${id}`,
     "GET",
     undefined,
     displayPosition,
@@ -99,7 +101,7 @@ startSolo.addEventListener("click", function () {
 
   if (document.getElementById("ThemeList") === null) {
     http(
-      "http://duelquizz-php/api/user/themes",
+      `http://${domainName}/api/user/themes`,
       "GET",
       undefined,
       fillSelectTheme,
@@ -108,7 +110,7 @@ startSolo.addEventListener("click", function () {
   } else {
     let themeId = document.getElementById("ThemeList").value;
     http(
-      "http://duelquizz-php/api/user/persistQuizz",
+      `http://${domainName}/api/user/persistQuizz`,
       "POST",
       {
         mode: 0,
@@ -123,7 +125,7 @@ startSolo.addEventListener("click", function () {
 
 startDuo.addEventListener("click", function () {
   http(
-    "http://duelquizz-php/api/user/themes",
+    `http://${domainName}/api/user/themes`,
     "GET",
     undefined,
     toLobbyDuo,

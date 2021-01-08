@@ -1,5 +1,7 @@
 import { http } from "../tools.js";
 
+const domainName = "duelquizz-php";
+
 let leftTime = 10;
 let index;
 let answeredCorrectly = 0;
@@ -56,7 +58,7 @@ try {
     switch (type) {
       case "start_quizz":
         http(
-          "http://duelquizz-php/api/user/persistQuizz",
+          `http://${domainName}/api/user/persistQuizz`,
           "POST",
           {
             mode: 1,
@@ -69,7 +71,7 @@ try {
         break;
       case "need_to_wait":
         http(
-          `http://duelquizz-php/api/user/playerTwoQuizz?idQuizz=${message.idQuizz}&user2=${userid}`,
+          `http://${domainName}/api/user/playerTwoQuizz?idQuizz=${message.idQuizz}&user2=${userid}`,
           "PATCH",
           undefined,
           storeQuestionsAndAnswers,
@@ -89,7 +91,7 @@ try {
         informUser1(result);
         break;
       case "disconnected":
-        opponentDisconected();
+        opponentDisconnected();
         break;
       case "with_yourself":
         cantPlayWithYourSelf();
@@ -267,8 +269,9 @@ function storeQuestionsAndAnswers(data) {
   allAnswers = data.possibleanswers;
 }
 
-function opponentDisconected() {
+function opponentDisconnected() {
   if (end === false) {
+    clearInterval(clock);
     StandbyDOM.style.display = "none";
     GameDOM.style.display = "none";
     LobbyDOM.style.display = "none";
@@ -331,7 +334,7 @@ if (document.getElementById("ThemeList") === null) {
 
 function updatePointsInDb(dbPoints) {
   http(
-    "http://duelquizz-php/api/user/updatePoints?points=" + dbPoints,
+    `http://${domainName}/api/user/updatePoints?points=` + dbPoints,
     "PATCH",
     undefined,
     undefined,

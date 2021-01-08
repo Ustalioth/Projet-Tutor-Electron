@@ -1,6 +1,7 @@
 export { http };
 
 function http(url, method, payload, callback, token) {
+  //nom de domaine à remplacer par le votre
   let action = url.replace("http://duelquizz-php/api/user/", "");
   let myHeaders = new Headers();
 
