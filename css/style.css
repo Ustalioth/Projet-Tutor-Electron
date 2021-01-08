@@ -12,6 +12,35 @@ ul{
   margin-left: 540px;
 }
 
+#lobby{
+  margin-top: 8%;
+}
+
+#back2acc{
+margin-top: 4%;
+}
+
+.answerQ{
+  margin-top: 8%;
+}
+
+.cd{
+  margin-top: 4%;
+}
+
+#Question{
+  font-size: xx-large;
+  margin-bottom: 8%;
+}
+
+.alignQ{
+  display: inline-flex;
+}
+
+.alignQ li{
+  margin-right: 20px;
+}
+
 #ThemeList{
   width: 52%;
   position: absolute;
