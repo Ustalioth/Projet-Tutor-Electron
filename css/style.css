@@ -1,5 +1,6 @@
 .error{
   color:red;
+  margin-top: 150px;
 }
 
 ul{
@@ -80,7 +81,8 @@ margin-top: 4%;
 }
 
 body{
-  background-color: #b1b7be;
+  background-image: url('bg.jpg');
+  color: #DBE4EE;
 }
 
 .accueil{
