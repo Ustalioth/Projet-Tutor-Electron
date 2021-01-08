@@ -1,5 +1,7 @@
 import { http } from "../tools.js";
 
+const domainName = "duelquizz-php";
+
 let form = document.getElementById("inscriptionForm");
 let inputs = document.getElementsByTagName("input");
 const errorMessageDOM = document.getElementById("errorMessage");
@@ -42,7 +44,7 @@ form.addEventListener("submit", function (e) {
 
   if (readyToAdd(validPass(password.value, confirmPassword.value), noEmpty())) {
     http(
-      "http://duelquizz-php/api/user/register",
+      `http://${domainName}/api/user/register`,
       "POST",
       {
         firstName: firstName.value,

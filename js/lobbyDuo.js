@@ -1,5 +1,7 @@
 import { http } from "../tools.js";
 
+const domainName = "duelquizz-php";
+
 let leftTime = 10;
 let index;
 let answeredCorrectly = 0;
@@ -55,9 +57,8 @@ try {
 
     switch (type) {
       case "start_quizz":
-        console.log("start quizz");
         http(
-          "http://duelquizz-php/api/user/persistQuizz",
+          `http://${domainName}/api/user/persistQuizz`,
           "POST",
           {
             mode: 1,
@@ -71,9 +72,8 @@ try {
       case "stream":
         console.log('streaming')
       case "need_to_wait":
-        console.log("need to wait");
         http(
-          `http://duelquizz-php/api/user/playerTwoQuizz?idQuizz=${message.idQuizz}&user2=${userid}`,
+          `http://${domainName}/api/user/playerTwoQuizz?idQuizz=${message.idQuizz}&user2=${userid}`,
           "PATCH",
           undefined,
           storeQuestionsAndAnswers,
@@ -81,7 +81,6 @@ try {
         );
         break;
       case "next":
-        console.log("next");
         if (message["end"] !== undefined) {
           end = true;
           user1points = message["user1points"];
@@ -94,7 +93,7 @@ try {
         informUser1(result);
         break;
       case "disconnected":
-        opponentDisconected();
+        opponentDisconnected();
         break;
       case "with_yourself":
         cantPlayWithYourSelf();
@@ -272,12 +271,13 @@ function storeQuestionsAndAnswers(data) {
   allAnswers = data.possibleanswers;
 }
 
-function opponentDisconected() {
+function opponentDisconnected() {
   if (end === false) {
+    clearInterval(clock);
     StandbyDOM.style.display = "none";
     GameDOM.style.display = "none";
     LobbyDOM.style.display = "none";
-    EndDOMmessage.style.display = "block";
+    EndDOM.style.display = "block";
     EndDOMmessage.innerHTML =
       "Votre adversaire s'est déconnecté, vous gagnez 10 points par abandon !";
     updatePointsInDb(10);
@@ -336,7 +336,7 @@ if (document.getElementById("ThemeList") === null) {
 
 function updatePointsInDb(dbPoints) {
   http(
-    "http://duelquizz-php/api/user/updatePoints?points=" + dbPoints,
+    `http://${domainName}/api/user/updatePoints?points=` + dbPoints,
     "PATCH",
     undefined,
     undefined,

@@ -1,5 +1,7 @@
 import { http } from "../tools.js";
 
+const domainName = "duelquizz-php";
+
 let form = document.getElementById("connectForm");
 const errorMessageDOM = document.getElementById("errorMessage");
 
@@ -20,7 +22,7 @@ form.addEventListener("submit", function (e) {
   let payload = { email: email, password: password };
 
   http(
-    "http://duelquizz-php/api/user/login",
+    `http://${domainName}/api/user/login`,
     "POST",
     payload,
     storeToken

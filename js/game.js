@@ -86,14 +86,6 @@ function nextQuestion(bypass = false) {
       });
 
       redirectToHome(earnedPoints);
-
-      // http(
-      //   "http://duelquizz-php/api/user/updatePoints?points=" + earnedPoints,
-      //   "PATCH",
-      //   undefined,
-      //   redirectToHome(earnedPoints),
-      //   token
-      // );
     }
   }
 }
