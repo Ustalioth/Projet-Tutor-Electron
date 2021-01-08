@@ -275,8 +275,8 @@ function opponentDisconected() {
     StandbyDOM.style.display = "none";
     GameDOM.style.display = "none";
     LobbyDOM.style.display = "none";
-    EndDOM.style.display = "block";
-    EndDOM.innerHTML =
+    EndDOMmessage.style.display = "block";
+    EndDOMmessage.innerHTML =
       "Votre adversaire s'est déconnecté, vous gagnez 10 points par abandon !";
     updatePointsInDb(10);
   }
