@@ -28,7 +28,7 @@ http(
 
 function displayUserData(result) {
   let id = localStorage.getItem("id");
-  points.innerHTML = localStorage.getItem("points");
+  points.innerHTML = result.points;
   bienvenue.innerHTML =
     sessionStorage.getItem("firstName") +
     " " +
@@ -148,5 +148,6 @@ cancelButton.addEventListener("click", function () {
 function startGame(data) {
   localStorage.setItem("questions", JSON.stringify(data.questions));
   localStorage.setItem("answers", JSON.stringify(data.possibleanswers));
+  console.log(data.possibleanswers);
   window.location.href = "../html/game.html";
 }

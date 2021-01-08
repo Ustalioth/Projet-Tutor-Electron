@@ -137,11 +137,7 @@ function informUser1(result) {
 function nextQuestion(params) {
   // on affiche la prochaine question, reset le timer, les messages d'erreur...
   StandbyDOM.style.display = "none";
-  LobbyDOM.style.display = "none";
   GameDOM.style.display = "block";
-
-  index++;
-  indexDOM.innerHTML = index + 1;
   clearAllRadios();
 
   leftTime = 10;
@@ -150,8 +146,8 @@ function nextQuestion(params) {
     if (leftTime != 0) {
       leftTime = leftTime - 1;
       timeDOM.innerHTML = leftTime;
+      console.log("decreased L149");
     } else {
-      clearInterval(clock);
       passTurn(true);
     }
   }, 1000);
@@ -164,29 +160,30 @@ function nextQuestion(params) {
 }
 
 function passTurn(bypass = false) {
-  console.trace();
-  console.log(index);
   // Bypass sert à ne pas vérifier le fait qu'une réponse ai été sélectionnée si le timer atteint 0
   if (index <= 3) {
     let answered = getAnswer();
     if (bypass === true) {
       console.log("in bypass");
+      clearInterval(clock);
       answeredArray.push(answered);
     } else {
       let checked = checkIfChecked(answered); //checked prend false si aucun bouton n'est coché ou la value du bouton coché
 
       if (checked !== false) {
         answeredArray.push(answered);
+        clearInterval(clock);
       } else {
         return;
       }
     }
     StandbyDOM.style.display = "block";
     GameDOM.style.display = "none";
-    LobbyDOM.style.display = "none";
 
     //Pas besoin de faire tout ça si il s'agit de la dernière question
     if (index !== 3) {
+      index++;
+      indexDOM.innerHTML = index + 1;
       socket.send(JSON.stringify({ type: "passTurn" }));
     } else {
       let correctIds = getCorrectAnswers(); //Array qui contient l'id de la bonne réponse de chaque question
@@ -209,6 +206,8 @@ function passTurn(bypass = false) {
         );
       } else {
         //dernière question du premier joueur, le deuxième doit encore répondre
+        console.log("end user 1");
+        console.log(index);
 
         socket.send(
           JSON.stringify({
@@ -221,7 +220,6 @@ function passTurn(bypass = false) {
 
       StandbyDOM.style.display = "none";
       GameDOM.style.display = "none";
-      LobbyDOM.style.display = "none";
       EndDOM.style.display = "block";
     }
   }
@@ -232,6 +230,8 @@ function handleSecondPlayer(data) {
   StandbyDOM.style.display = "none";
   GameDOM.style.display = "block";
 
+  document.title = "Jeu duo";
+
   index = 0;
 
   questions = data.questions;
@@ -239,10 +239,10 @@ function handleSecondPlayer(data) {
 
   clock = setInterval(function () {
     if (leftTime != 0) {
+      console.log("decreased L246");
       leftTime = leftTime - 1;
       timeDOM.innerHTML = leftTime;
     } else {
-      clearInterval(clock);
       passTurn(true);
     }
   }, 1000);
@@ -262,7 +262,10 @@ function storeQuestionsAndAnswers(data) {
   StandbyDOM.style.display = "block";
   GameDOM.style.display = "none";
   LobbyDOM.style.display = "none";
-  index = -1;
+
+  document.title = "Jeu duo";
+
+  index = 0;
 
   questions = data.questions;
   allAnswers = data.possibleanswers;
