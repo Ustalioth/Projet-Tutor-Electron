@@ -55,6 +55,11 @@ form.addEventListener("submit", function (e) {
   }
 });
 
-function redirect() {
-  window.location.href = "../html/connexion.html";
+function redirect(data) {
+  if (data.error === "Already exists") {
+    errorMessageDOM.innerHTML =
+      "Un compte lié à cette adresse mail existe déjà";
+  } else {
+    window.location.href = "../html/connexion.html";
+  }
 }
