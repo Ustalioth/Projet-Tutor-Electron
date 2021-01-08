@@ -14,6 +14,14 @@ function storeToken(result) {
   window.location = "./accueil.html";
 }
 
+function checkFilled(email, password) {
+  console.log(email.trim());
+  if (email.trim() === "" || password.trim() === "") {
+    return false;
+  }
+  return true;
+}
+
 form.addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -21,10 +29,16 @@ form.addEventListener("submit", function (e) {
   let password = document.getElementById("password").value;
   let payload = { email: email, password: password };
 
-  http(
-    `http://${domainName}/api/user/login`,
-    "POST",
-    payload,
-    storeToken
-  ).catch((error) => (errorMessageDOM.innerHTML = "Identifiants invalides"));
+  console.log(checkFilled(email, password));
+
+  if (checkFilled(email, password) === false) {
+    errorMessageDOM.innerHTML = "Merci de bien remplir tous les champs";
+  } else {
+    http(
+      `http://${domainName}/api/user/login`,
+      "POST",
+      payload,
+      storeToken
+    ).catch((error) => (errorMessageDOM.innerHTML = "Identifiants invalides"));
+  }
 });

@@ -15,9 +15,6 @@ function http(url, method, payload, callback, token) {
     for (let k in payload) {
       formData.append(k, payload[k]);
     }
-    for (var key of formData.entries()) {
-      //console.log(key[0] + ", " + key[1]);
-    }
     options.body = formData;
   }
 
