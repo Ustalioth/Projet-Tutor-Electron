@@ -55,7 +55,6 @@ try {
 
     switch (type) {
       case "start_quizz":
-        console.log("start quizz");
         http(
           "http://duelquizz-php/api/user/persistQuizz",
           "POST",
@@ -69,7 +68,6 @@ try {
         );
         break;
       case "need_to_wait":
-        console.log("need to wait");
         http(
           `http://duelquizz-php/api/user/playerTwoQuizz?idQuizz=${message.idQuizz}&user2=${userid}`,
           "PATCH",
@@ -79,7 +77,6 @@ try {
         );
         break;
       case "next":
-        console.log("next");
         if (message["end"] !== undefined) {
           end = true;
           user1points = message["user1points"];
@@ -275,7 +272,7 @@ function opponentDisconected() {
     StandbyDOM.style.display = "none";
     GameDOM.style.display = "none";
     LobbyDOM.style.display = "none";
-    EndDOMmessage.style.display = "block";
+    EndDOM.style.display = "block";
     EndDOMmessage.innerHTML =
       "Votre adversaire s'est déconnecté, vous gagnez 10 points par abandon !";
     updatePointsInDb(10);
