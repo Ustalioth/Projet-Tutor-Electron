@@ -96,6 +96,7 @@ try {
         informUser1(result);
         break;
       case "disconnected":
+        console.log("disconnected");
         opponentDisconected();
         break;
     }
