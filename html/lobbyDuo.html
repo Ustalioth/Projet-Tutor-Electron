@@ -22,7 +22,7 @@
     />
     <link rel="stylesheet" href="../css/style.css" />
   </head>
-  <body>
+  <body class="answerQ text-center">
     <div class="text-center"  id="lobby">
       <p id="waitingMessage">
         En attente d'un deuxième joueur<span id="points"></span>
@@ -35,28 +35,29 @@
       <div class="container gameZone">
         <h1 id="Question"></h1>
         <form id="answers">
-          <ul>
+          <ul class="alignQ text-center">
             <li>
-              <input type="radio" name="answer" id="1radio" />
+              <input class="form-check-input" type="radio" name="answer" id="1radio" />
               <label id="1" for="1radio"></label>
             </li>
             <li>
-              <input type="radio" name="answer" id="2radio" />
+              <input class="form-check-input" type="radio" name="answer" id="2radio" />
               <label id="2" for="2radio"></label>
             </li>
             <li>
-              <input type="radio" name="answer" id="3radio" />
+              <input class="form-check-input" type="radio" name="answer" id="3radio" />
               <label id="3" for="3radio"></label>
             </li>
             <li>
-              <input type="radio" name="answer" id="4radio" />
+              <input class="form-check-input" type="radio" name="answer" id="4radio" />
               <label id="4" for="4radio"></label>
             </li>
           </ul>
-          <input type="submit" value="Répondre" />
+          <br>
+          <input class="subB btn" type="submit" value="Répondre" />
         </form>
 
-        <p>Temps restant : <span id="time">10</span> secondes</p>
+        <p class="cd">Temps restant : <span id="time">10</span> secondes</p>
         <p>Question <span id="index">1</span>/4</p>
         <p class="error" id="errorMessage"></p>
       </div>
